@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAP Studio — Creative Intelligence</title>
+    <title>CAP Studio — Creative Intelligence Hub</title>
     <style>
         :root {
-            --bg: #f5f2ed;
-            --bg-dark: #0c0c0c;
-            --text: #0c0c0c;
-            --text-sub: #3b3833;
-            --text-light: #f5f2ed;
+            --bg: #f4f1ec;
+            --bg-dark: #0b0b0b;
+            --text: #0b0b0b;
+            --text-sub: #3e3a35;
+            --text-light: #f4f1ec;
             --line: #d3cfc8;
-            --line-strong: #0c0c0c;
-            --spacing: clamp(1.6rem, 4vw, 3.2rem);
-            --header-height: 64px;
-            --transition-slow: 0.7s cubic-bezier(0.23, 0.01, 0.04, 1);
-            --transition-medium: 0.4s cubic-bezier(0.23, 0.01, 0.04, 1);
-            --transition-fast: 0.22s ease;
-            --service-font: clamp(1.2rem, 2.2vw, 2rem);
+            --line-strong: #0b0b0b;
+            --spacing: clamp(1.8rem, 5vw, 3.5rem);
+            --header-h: 72px;
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+            --ease-in-out: cubic-bezier(0.77, 0.01, 0.11, 1);
         }
 
         *,
@@ -41,10 +39,10 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1;
+            line-height: 1.1;
             overflow-x: hidden;
-            padding-top: var(--header-height);
-            transition: background-color var(--transition-slow);
+            padding-top: var(--header-h);
+            transition: background-color 0.6s ease;
         }
 
         /* ── PERSISTENT HEADER ── */
@@ -53,259 +51,270 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: var(--header-height);
-            z-index: 100;
+            height: var(--header-h);
+            z-index: 999;
             display: flex;
             align-items: center;
-            justify-content: center;
+            padding: 0 var(--spacing);
+            background: transparent;
+            transition: background 0.3s ease, backdrop-filter 0.3s ease;
             pointer-events: none;
             border-bottom: 1px solid transparent;
-            transition: border-color var(--transition-medium), background-color var(--transition-medium);
-            background: transparent;
         }
         .site-header.scrolled {
-            border-bottom-color: rgba(12, 12, 12, 0.08);
-            background: rgba(245, 242, 237, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(244, 241, 236, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom-color: rgba(11, 11, 11, 0.07);
         }
-        .brand-word {
-            font-size: 0.9rem;
+        .brand {
+            font-size: 0.95rem;
             font-weight: 600;
-            letter-spacing: 0.35em;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
             color: var(--text);
             pointer-events: auto;
-            position: relative;
-            display: inline-block;
-            padding: 0 0.5rem;
-            transition: color var(--transition-medium);
-        }
-        .brand-word::before,
-        .brand-word::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 28px;
-            height: 1px;
-            background: var(--text);
-            transition: width var(--transition-medium), opacity var(--transition-medium);
-            opacity: 0.6;
-        }
-        .brand-word::before {
-            right: 100%;
-            margin-right: 10px;
-        }
-        .brand-word::after {
-            left: 100%;
-            margin-left: 10px;
-        }
-        .site-header.scrolled .brand-word::before,
-        .site-header.scrolled .brand-word::after {
-            width: 18px;
-            opacity: 0.45;
+            user-select: none;
+            opacity: 0.9;
+            transition: color 0.3s ease;
         }
 
-        /* ── OPENING (WOW FIRST GLANCE) ── */
+        /* ── SCROLL STAGE ── */
+        .scroll-stage {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── OPENING (MORPHING MANIFESTO) ── */
         .opening {
-            min-height: 100vh;
+            position: relative;
+            height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
             padding: var(--spacing);
-            padding-top: calc(var(--spacing) + 2rem);
-            padding-bottom: calc(var(--spacing) * 2);
-            position: relative;
-            overflow: hidden;
+            background: var(--bg);
+            transition: background 0.6s;
         }
-        .opening-inner {
+        .opening-canvas {
             width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
+            max-width: 1200px;
+            position: relative;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
-        .opening-line-mask {
-            overflow: hidden;
-            display: block;
-            margin-bottom: 0.05em;
-        }
-        .opening-line {
-            display: block;
-            font-size: clamp(3.2rem, 9vw, 8rem);
-            font-weight: 280;
-            letter-spacing: -0.03em;
-            line-height: 0.95;
+        .morph-line {
+            display: inline-block;
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 270;
+            letter-spacing: -0.035em;
+            line-height: 0.9;
             color: var(--text);
-            transform: translateY(110%);
-            transition: transform var(--transition-slow), opacity 0.3s ease;
-            will-change: transform;
-            opacity: 0;
-        }
-        .opening-line.revealed {
-            transform: translateY(0);
+            white-space: nowrap;
+            transition: transform 0.9s var(--ease-out-expo), opacity 0.6s ease;
+            will-change: transform, opacity;
+            position: relative;
             opacity: 1;
+            transform: translateY(0) scale(1);
         }
-        .opening-line:nth-child(1) {
-            transition-delay: 0.15s;
-        }
-        .opening-line:nth-child(2) {
-            transition-delay: 0.32s;
-        }
-        .opening-line:nth-child(3) {
-            transition-delay: 0.5s;
-        }
-        .opening-line:nth-child(4) {
-            transition-delay: 0.68s;
-        }
-        .opening-line em {
+        .morph-line:nth-child(1) { transition-delay: 0.05s; }
+        .morph-line:nth-child(2) { transition-delay: 0.12s; }
+        .morph-line:nth-child(3) { transition-delay: 0.2s; }
+        .morph-line:nth-child(4) { transition-delay: 0.28s; }
+
+        .morph-line em {
             font-style: italic;
             font-weight: 320;
         }
-        .opening-subtle-divider {
-            width: 0;
-            height: 1px;
-            background: var(--text);
-            margin: 0.6em 0 0.4em;
-            transition: width 1.2s cubic-bezier(0.23, 0.01, 0.04, 1);
-            opacity: 0.3;
+
+        /* When scrolled past opening, lines move to corners */
+        .opening.morphed .morph-line {
+            position: fixed;
+            z-index: 900;
+            color: rgba(11,11,11,0.2);
+            pointer-events: none;
+            transition: all 0.9s var(--ease-out-expo);
         }
-        .opening-subtle-divider.revealed {
-            width: 100%;
+        .opening.morphed .morph-line:nth-child(1) {
+            top: calc(var(--header-h) + 2rem);
+            left: var(--spacing);
+            transform: translate(0, 0) scale(0.35);
+            transform-origin: top left;
+        }
+        .opening.morphed .morph-line:nth-child(2) {
+            top: calc(var(--header-h) + 2rem);
+            right: var(--spacing);
+            transform: translate(0, 0) scale(0.35);
+            transform-origin: top right;
+            text-align: right;
+        }
+        .opening.morphed .morph-line:nth-child(3) {
+            bottom: 4rem;
+            left: var(--spacing);
+            transform: translate(0, 0) scale(0.35);
+            transform-origin: bottom left;
+        }
+        .opening.morphed .morph-line:nth-child(4) {
+            bottom: 4rem;
+            right: var(--spacing);
+            transform: translate(0, 0) scale(0.35);
+            transform-origin: bottom right;
+            text-align: right;
+        }
+        .opening.morphed .morph-line em {
+            font-style: normal;
         }
 
-        /* ── SERVICES (FUTURISTIC INTERACTIVE SENTENCE) ── */
+        /* ── SERVICES (BREAKING GRID) ── */
         .services-section {
             padding: var(--spacing);
-            padding-top: calc(var(--spacing) * 1.8);
-            padding-bottom: calc(var(--spacing) * 2.2);
+            padding-top: 0;
+            padding-bottom: calc(var(--spacing) * 2.5);
             position: relative;
             z-index: 2;
             background: var(--bg);
-            transition: background var(--transition-slow);
-        }
-        .services-sentence {
+            min-height: 100vh;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: baseline;
-            gap: 0.25em 0.6em;
-            font-size: var(--service-font);
-            font-weight: 300;
-            letter-spacing: -0.01em;
-            line-height: 1.4;
-            color: var(--text);
-            max-width: 1200px;
+            align-items: center;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
-            text-align: center;
-            user-select: none;
+            background: transparent;
         }
-        .service-word {
+        .service-tile {
             position: relative;
+            background: transparent;
+            border: 1px solid rgba(11,11,11,0.08);
+            padding: clamp(1.5rem, 3vw, 2.5rem);
             cursor: pointer;
-            display: inline-block;
-            padding: 0.15em 0.25em;
-            transition: color var(--transition-fast), background var(--transition-fast);
-            border-bottom: 1px solid transparent;
-            white-space: nowrap;
+            transition: all 0.35s var(--ease-in-out);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 220px;
+            overflow: hidden;
+            z-index: 1;
         }
-        .service-word:hover,
-        .service-word.active {
-            color: var(--bg);
-            background: var(--text);
-            border-bottom-color: var(--text);
+        .service-tile:hover {
+            border-color: var(--line-strong);
+            z-index: 5;
+            transform: scale(1.03);
+            box-shadow: 0 25px 45px -15px rgba(0,0,0,0.1);
+            background: #ffffff;
         }
-        .service-sep {
-            color: var(--line-strong);
-            opacity: 0.35;
-            font-weight: 200;
-            margin: 0 0.15em;
-            pointer-events: none;
+        .service-tile .tile-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            margin-bottom: 0.5rem;
+            transition: opacity 0.3s;
         }
-        .services-desc-panel {
-            margin-top: clamp(2rem, 5vw, 3.5rem);
-            text-align: center;
-            min-height: 3.5rem;
-            transition: opacity var(--transition-medium), transform var(--transition-medium);
+        .service-tile .tile-title {
+            font-size: clamp(1.4rem, 2.2vw, 2rem);
+            font-weight: 450;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            transition: transform 0.4s var(--ease-out-expo);
+            transform-origin: left bottom;
+        }
+        .service-tile .tile-desc {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: var(--text-sub);
             opacity: 0;
-            transform: translateY(12px);
+            transform: translateY(15px);
+            transition: opacity 0.35s, transform 0.45s var(--ease-out-expo);
             pointer-events: none;
+            max-width: 90%;
         }
-        .services-desc-panel.visible {
+        .service-tile:hover .tile-desc {
             opacity: 1;
             transform: translateY(0);
         }
-        .services-desc-text {
-            font-size: clamp(1rem, 1.4vw, 1.2rem);
-            font-weight: 360;
-            letter-spacing: 0.01em;
-            line-height: 1.5;
-            color: var(--text-sub);
-            max-width: 680px;
-            margin: 0 auto;
-            transition: opacity 0.2s;
+        .service-tile:hover .tile-title {
+            transform: translateY(-12px);
+        }
+        .service-tile:hover .tile-label {
+            opacity: 0.5;
         }
 
-        /* ── IDENTITY (HIGH-IMPACT TYPOGRAPHY) ── */
+        /* ── IDENTITY (CINEMATIC REVEAL) ── */
         .identity-section {
-            padding: var(--spacing);
-            padding-top: calc(var(--spacing) * 2.2);
-            padding-bottom: calc(var(--spacing) * 2.6);
             background: var(--bg-dark);
             color: var(--text-light);
+            padding: var(--spacing);
+            padding-top: calc(var(--spacing) * 3);
+            padding-bottom: calc(var(--spacing) * 3);
             position: relative;
             z-index: 2;
-            transition: background var(--transition-slow);
         }
-        .identity-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: clamp(2rem, 5vw, 4rem);
+        .identity-inner {
             max-width: 1300px;
             margin: 0 auto;
         }
         .identity-block {
-            border-left: 1px solid rgba(245, 242, 237, 0.25);
-            padding-left: clamp(1.2rem, 2vw, 2rem);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            margin-bottom: clamp(3rem, 7vw, 5rem);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
         }
-        .identity-num {
-            font-size: 2.4rem;
+        .identity-block.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .identity-block:last-child {
+            margin-bottom: 0;
+        }
+        .id-number {
+            font-size: clamp(4rem, 9vw, 8rem);
             font-weight: 300;
-            letter-spacing: -0.02em;
-            line-height: 1;
-            margin-bottom: 0.8rem;
-            color: rgba(245, 242, 237, 0.7);
-            display: block;
+            letter-spacing: -0.04em;
+            line-height: 0.8;
+            margin-right: clamp(2rem, 5vw, 4rem);
+            color: rgba(244, 241, 236, 0.18);
+            flex: 0 0 auto;
+            min-width: 2em;
+            transition: color 0.3s;
         }
-        .identity-title {
+        .id-content {
+            flex: 1 1 300px;
+            border-left: 1px solid rgba(244, 241, 236, 0.2);
+            padding-left: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        .id-label {
             font-size: 0.7rem;
-            letter-spacing: 0.28em;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
             margin-bottom: 1rem;
-            color: rgba(245, 242, 237, 0.55);
-            font-weight: 400;
+            color: rgba(244, 241, 236, 0.5);
+            display: block;
         }
-        .identity-text {
-            font-size: clamp(0.9rem, 1.05vw, 1rem);
-            font-weight: 360;
+        .id-text {
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
+            font-weight: 350;
             line-height: 1.7;
             color: var(--text-light);
             opacity: 0.85;
         }
-        .reveal-target {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity var(--transition-slow), transform var(--transition-slow);
-        }
-        .reveal-target.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .identity-block:nth-child(2) {
-            transition-delay: 0.08s;
-        }
-        .identity-block:nth-child(3) {
-            transition-delay: 0.18s;
-        }
 
-        /* ── CTA (INEVITABLE ACTION) ── */
+        /* ── CTA ── */
         .cta-section {
             min-height: 100vh;
             display: flex;
@@ -316,205 +325,236 @@
             position: relative;
             z-index: 10;
         }
-        .cta-inner {
+        .cta-core {
             text-align: center;
-            max-width: 720px;
+            max-width: 680px;
             width: 100%;
         }
         .cta-headline {
-            font-size: clamp(2.8rem, 7vw, 5.8rem);
-            font-weight: 280;
+            font-size: clamp(2.8rem, 8vw, 6rem);
+            font-weight: 270;
             letter-spacing: -0.03em;
             line-height: 1.05;
+            margin-bottom: 2.2rem;
             color: var(--text);
-            margin-bottom: 2rem;
         }
-        .cta-btn {
+        .cta-button {
             display: inline-flex;
             align-items: center;
             gap: 0.7em;
             font-size: clamp(0.9rem, 1.3vw, 1.1rem);
             font-weight: 550;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
             text-decoration: none;
             color: var(--text-light);
             background: var(--bg-dark);
-            padding: 1.2em 3em 1.2em 3.2em;
-            transition: background var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
+            padding: 1.2em 3.2em;
+            transition: background 0.35s, transform 0.3s, box-shadow 0.35s;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
             position: relative;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            animation: subtlePulse 2.4s infinite ease-in-out;
         }
-        .cta-btn:hover {
-            background: #1a1a1a;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        @keyframes subtlePulse {
+            0% { box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
+            50% { box-shadow: 0 8px 28px rgba(0,0,0,0.14); }
+            100% { box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
         }
-        .cta-btn:active {
-            transform: translateY(0);
-            transition: transform 0.06s ease;
+        .cta-button:hover {
+            background: #1f1f1f;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+            animation: none;
         }
         .cta-arrow {
             font-size: 1.2em;
-            transition: transform var(--transition-medium);
+            transition: transform 0.3s;
             display: inline-block;
         }
-        .cta-btn:hover .cta-arrow {
+        .cta-button:hover .cta-arrow {
             transform: translateX(8px);
         }
         .cta-note {
             display: block;
-            margin-top: 1.8rem;
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
+            margin-top: 2rem;
+            font-size: 0.68rem;
+            letter-spacing: 0.24em;
             text-transform: uppercase;
             color: var(--text-sub);
-            opacity: 0.7;
+            opacity: 0.65;
         }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 900px) {
-            .identity-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .identity-block:last-child {
-                grid-column: span 2;
-                max-width: 500px;
-                margin: 0 auto;
+            .opening.morphed .morph-line {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                transform: none !important;
+                color: var(--text) !important;
+                opacity: 0.2 !important;
+                font-size: clamp(2rem, 6vw, 4rem) !important;
             }
-            .opening-line {
-                font-size: clamp(2.4rem, 8vw, 5rem);
-            }
-            .services-sentence {
-                font-size: clamp(1rem, 3.5vw, 1.8rem);
-                gap: 0.3em 0.5em;
+            .opening.morphed {
+                display: none; /* hide fixed corners on tablet, simplify */
             }
         }
-        @media (max-width: 600px) {
-            :root {
-                --header-height: 56px;
-            }
-            .brand-word {
-                font-size: 0.75rem;
-                letter-spacing: 0.28em;
-            }
-            .identity-grid {
+        @media (max-width: 700px) {
+            .services-grid {
                 grid-template-columns: 1fr;
+                gap: 1px;
             }
-            .identity-block:last-child {
-                grid-column: auto;
-                max-width: none;
+            .service-tile {
+                min-height: 150px;
             }
-            .opening-line {
-                font-size: clamp(1.8rem, 7vw, 3.2rem);
+            .identity-block {
+                flex-direction: column;
+                align-items: flex-start;
             }
-            .services-sentence {
-                font-size: 1.15rem;
-                justify-content: flex-start;
-                text-align: left;
+            .id-number {
+                margin-right: 0;
+                margin-bottom: 1rem;
+                font-size: 3rem;
             }
-            .services-desc-text {
-                font-size: 0.9rem;
+            .id-content {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid rgba(255,255,255,0.15);
+                padding-top: 1.2rem;
             }
-            .cta-headline {
-                font-size: 2rem;
-            }
-            .cta-btn {
-                padding: 1em 2em 1em 2.2em;
-                font-size: 0.8rem;
+            .opening.morphed .morph-line {
+                font-size: 1.6rem !important;
+                opacity: 0.35 !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- FIXED HEADER -->
-    <header class="site-header" id="siteHeader" aria-label="Site header">
-        <span class="brand-word">CAP STUDIO</span>
+    <header class="site-header" id="siteHeader">
+        <span class="brand">CAP STUDIO</span>
     </header>
 
-    <!-- OPENING (WOW) -->
-    <section class="opening" id="openingSection" aria-label="Manifesto">
-        <div class="opening-inner">
-            <span class="opening-line-mask"><span class="opening-line" id="line1">Find your world.</span></span>
-            <span class="opening-line-mask"><span class="opening-line" id="line2">Speak to your world.</span></span>
-            <span class="opening-line-mask"><span class="opening-line" id="line3">Make products to <em>fill</em> that world.</span></span>
-            <span class="opening-line-mask"><span class="opening-line" id="line4">Allow people to buy into the world you've built.</span></span>
-            <div class="opening-subtle-divider" id="openingDivider"></div>
-        </div>
-    </section>
-
-    <!-- SERVICES (INTERACTIVE SENTENCE) -->
-    <section class="services-section" id="servicesSection" aria-label="Capabilities">
-        <div class="services-sentence" id="servicesSentence">
-            <span class="service-word" data-desc="Bespoke creative workshop blending traditional craftsmanship with cutting-edge innovation.">Atelier</span><span class="service-sep">/</span>
-            <span class="service-word" data-desc="Strategic evolution of brand identity and positioning to achieve market dominance.">Brand Maturation</span><span class="service-sep">/</span>
-            <span class="service-word" data-desc="Full-spectrum product and concept development from ideation to market launch.">Development</span><span class="service-sep">/</span>
-            <span class="service-word" data-desc="Optimized production workflows that maximize efficiency and creative output.">Streamlined Production</span><span class="service-sep">/</span>
-            <span class="service-word" data-desc="Comprehensive project and talent management ensuring seamless execution.">Management</span><span class="service-sep">/</span>
-            <span class="service-word" data-desc="Data-driven strategic planning with predictive market intelligence.">Advanced Strategy</span><span class="service-sep">/</span>
-            <span class="service-word" data-desc="End-to-end collection creation from conceptual design to final production.">Collection Designs & Build</span><span class="service-sep">/</span>
-            <span class="service-word" data-desc="Integrated sales and marketing roadmaps for maximum market penetration.">Sales & Marketing Agenda</span><span class="service-sep">/</span>
-            <span class="service-word" data-desc="Holistic 360° brand connectivity across all touchpoints and channels.">Bridge360</span>
-        </div>
-        <div class="services-desc-panel" id="servicesDescPanel">
-            <p class="services-desc-text" id="servicesDescText"></p>
-        </div>
-    </section>
-
-    <!-- IDENTITY (HIGH-IMPACT) -->
-    <section class="identity-section" id="identitySection" aria-label="About">
-        <div class="identity-grid">
-            <div class="identity-block reveal-target">
-                <span class="identity-num">01</span>
-                <span class="identity-title">Foundation</span>
-                <p class="identity-text">CAP Studio is a multidisciplinary international agency headquartered in Miami, developing and implementing cross-cultural strategies with partners worldwide.</p>
+    <div class="scroll-stage">
+        <!-- OPENING (MORPH) -->
+        <section class="opening" id="openingSection">
+            <div class="opening-canvas">
+                <span class="morph-line">Find your world.</span>
+                <span class="morph-line">Speak to your world.</span>
+                <span class="morph-line">Make products to <em>fill</em> that world.</span>
+                <span class="morph-line">Allow people to buy into the world you've built.</span>
             </div>
-            <div class="identity-block reveal-target">
-                <span class="identity-num">02</span>
-                <span class="identity-title">Method</span>
-                <p class="identity-text">Operating as a 360° creative intelligence hub, we employ a free-form methodology that delivers dedicated, tailor-made support, strategic direction, and comprehensive assistance.</p>
-            </div>
-            <div class="identity-block reveal-target">
-                <span class="identity-num">03</span>
-                <span class="identity-title">Network</span>
-                <p class="identity-text">Our global network forms the foundation for deep counter-culture understanding, providing clients with an influential platform for personal brand architecture, aesthetic evolution, and the elevation of visionary projects.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA (INEVITABLE) -->
-    <section class="cta-section" id="ctaSection" aria-label="Contact">
-        <div class="cta-inner">
-            <h2 class="cta-headline reveal-target">Ready to disappear<br>from the noise?</h2>
-            <a href="mailto:studio@capstudio.com" class="cta-btn reveal-target" id="ctaButton">
-                INQUIRE
-                <span class="cta-arrow">→</span>
-            </a>
-            <span class="cta-note reveal-target">Serious inquiries only. Confidentiality guaranteed.</span>
-        </div>
-    </section>
+        <!-- SERVICES -->
+        <section class="services-section" id="servicesSection">
+            <div class="services-grid">
+                <div class="service-tile">
+                    <span class="tile-label">01</span>
+                    <span class="tile-title">Atelier</span>
+                    <p class="tile-desc">Bespoke creative workshop combining traditional craftsmanship with cutting-edge innovation.</p>
+                </div>
+                <div class="service-tile">
+                    <span class="tile-label">02</span>
+                    <span class="tile-title">Brand Maturation</span>
+                    <p class="tile-desc">Strategic evolution of brand identity and positioning to achieve market dominance.</p>
+                </div>
+                <div class="service-tile">
+                    <span class="tile-label">03</span>
+                    <span class="tile-title">Development</span>
+                    <p class="tile-desc">Full-spectrum product and concept development from ideation to market launch.</p>
+                </div>
+                <div class="service-tile">
+                    <span class="tile-label">04</span>
+                    <span class="tile-title">Streamlined Production</span>
+                    <p class="tile-desc">Optimized production workflows that maximize efficiency and creative output.</p>
+                </div>
+                <div class="service-tile">
+                    <span class="tile-label">05</span>
+                    <span class="tile-title">Management</span>
+                    <p class="tile-desc">Comprehensive project and talent management ensuring seamless execution.</p>
+                </div>
+                <div class="service-tile">
+                    <span class="tile-label">06</span>
+                    <span class="tile-title">Advanced Strategy</span>
+                    <p class="tile-desc">Data-driven strategic planning with predictive market intelligence.</p>
+                </div>
+                <div class="service-tile">
+                    <span class="tile-label">07</span>
+                    <span class="tile-title">Collection Designs & Build</span>
+                    <p class="tile-desc">End-to-end collection creation from conceptual design to final production.</p>
+                </div>
+                <div class="service-tile">
+                    <span class="tile-label">08</span>
+                    <span class="tile-title">Sales & Marketing Agenda</span>
+                    <p class="tile-desc">Integrated sales and marketing roadmaps designed for maximum market penetration.</p>
+                </div>
+                <div class="service-tile">
+                    <span class="tile-label">09</span>
+                    <span class="tile-title">Bridge360</span>
+                    <p class="tile-desc">Holistic 360-degree brand connectivity across all touchpoints and channels.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IDENTITY -->
+        <section class="identity-section" id="identitySection">
+            <div class="identity-inner">
+                <div class="identity-block reveal">
+                    <div class="id-number">01</div>
+                    <div class="id-content">
+                        <span class="id-label">Foundation</span>
+                        <p class="id-text">CAP Studio is a multidisciplinary international agency headquartered in Miami, developing and implementing cross-cultural strategies with partners worldwide.</p>
+                    </div>
+                </div>
+                <div class="identity-block reveal">
+                    <div class="id-number">02</div>
+                    <div class="id-content">
+                        <span class="id-label">Method</span>
+                        <p class="id-text">Operating as a 360° creative intelligence hub, we employ a free-form methodology that delivers dedicated, tailor-made support, strategic direction, and comprehensive assistance.</p>
+                    </div>
+                </div>
+                <div class="identity-block reveal">
+                    <div class="id-number">03</div>
+                    <div class="id-content">
+                        <span class="id-label">Network</span>
+                        <p class="id-text">Our global network forms the foundation for deep counter-culture understanding, providing clients with an influential platform for personal brand architecture, aesthetic evolution, and the elevation of visionary projects.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section" id="ctaSection">
+            <div class="cta-core">
+                <h2 class="cta-headline">Ready to disappear<br>from the noise?</h2>
+                <a href="mailto:studio@capstudio.com" class="cta-button" id="ctaButton">
+                    INQUIRE
+                    <span class="cta-arrow">→</span>
+                </a>
+                <span class="cta-note">Serious inquiries only. Confidentiality guaranteed.</span>
+            </div>
+        </section>
+    </div>
 
     <script>
         (function() {
-            // DOM refs
+            // DOM elements
             const header = document.getElementById('siteHeader');
-            const line1 = document.getElementById('line1');
-            const line2 = document.getElementById('line2');
-            const line3 = document.getElementById('line3');
-            const line4 = document.getElementById('line4');
-            const divider = document.getElementById('openingDivider');
-            const servicesSentence = document.getElementById('servicesSentence');
-            const descPanel = document.getElementById('servicesDescPanel');
-            const descText = document.getElementById('servicesDescText');
+            const openingSection = document.getElementById('openingSection');
+            const morphLines = document.querySelectorAll('.morph-line');
+            const revealBlocks = document.querySelectorAll('.reveal');
             const ctaButton = document.getElementById('ctaButton');
-            const revealTargets = document.querySelectorAll('.reveal-target');
 
             // ── HEADER SCROLL ──
             let headerTicking = false;
             const updateHeader = () => {
-                const y = window.scrollY || window.pageYOffset;
-                if (y > 40) {
+                const y = window.scrollY;
+                if (y > 30) {
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
@@ -529,97 +569,42 @@
             }, { passive: true });
             updateHeader();
 
-            // ── OPENING REVEAL ──
-            const revealOpening = () => {
-                if (line1) line1.classList.add('revealed');
-                if (line2) line2.classList.add('revealed');
-                if (line3) line3.classList.add('revealed');
-                if (line4) line4.classList.add('revealed');
-                if (divider) divider.classList.add('revealed');
-            };
-            setTimeout(revealOpening, 200);
-
-            // ── SERVICES INTERACTIVE SENTENCE ──
-            const serviceWords = servicesSentence ? servicesSentence.querySelectorAll('.service-word') : [];
-            let activeWord = null;
-            let hideTimeout = null;
-
-            const showDescription = (word) => {
-                if (activeWord === word) return;
-                // Remove active class from previous
-                if (activeWord) activeWord.classList.remove('active');
-                const desc = word.getAttribute('data-desc');
-                if (desc) {
-                    descText.textContent = desc;
-                    descPanel.classList.add('visible');
+            // ── OPENING MORPH ON SCROLL ──
+            const handleMorph = () => {
+                const scrollY = window.scrollY;
+                const viewH = window.innerHeight;
+                const triggerPoint = viewH * 0.5; // when half of opening is scrolled past
+                if (scrollY > triggerPoint && window.innerWidth > 1000) {
+                    openingSection.classList.add('morphed');
+                } else {
+                    openingSection.classList.remove('morphed');
                 }
-                word.classList.add('active');
-                activeWord = word;
-                if (hideTimeout) clearTimeout(hideTimeout);
             };
+            window.addEventListener('scroll', handleMorph, { passive: true });
+            window.addEventListener('resize', handleMorph);
+            handleMorph();
 
-            const hideDescription = (delay = 400) => {
-                if (hideTimeout) clearTimeout(hideTimeout);
-                hideTimeout = setTimeout(() => {
-                    if (activeWord) activeWord.classList.remove('active');
-                    descPanel.classList.remove('visible');
-                    activeWord = null;
-                }, delay);
-            };
-
-            serviceWords.forEach(word => {
-                word.addEventListener('mouseenter', () => showDescription(word));
-                word.addEventListener('mouseleave', () => hideDescription(500));
-                word.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    // toggle on touch devices: if already active, hide; else show
-                    if (activeWord === word && descPanel.classList.contains('visible')) {
-                        hideDescription(0);
-                    } else {
-                        showDescription(word);
-                    }
-                });
-            });
-
-            // If mouse leaves the whole sentence area, hide after delay
-            if (servicesSentence) {
-                servicesSentence.addEventListener('mouseleave', () => hideDescription(600));
-            }
-
-            // ── INTERSECTION OBSERVER ──
-            const observerOptions = { root: null, rootMargin: '0px 0px -4% 0px', threshold: 0.1 };
-            const observer = new IntersectionObserver((entries) => {
+            // ── IDENTITY REVEAL ON SCROLL ──
+            const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('revealed');
-                        observer.unobserve(entry.target);
+                        revealObserver.unobserve(entry.target);
                     }
                 });
-            }, observerOptions);
-
-            revealTargets.forEach(el => observer.observe(el));
+            }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
+            revealBlocks.forEach(block => revealObserver.observe(block));
 
             // ── CTA CLICK ──
             if (ctaButton) {
                 ctaButton.addEventListener('click', (e) => {
-                    // mailto will proceed
+                    // mailto proceeds normally
                 });
             }
 
-            // Resize handler
-            window.addEventListener('resize', () => {
-                if (!headerTicking) {
-                    requestAnimationFrame(updateHeader);
-                    headerTicking = true;
-                }
-            }, { passive: true });
-
             console.log('%c CAP STUDIO %c— Creative Intelligence Hub',
-                'font-weight:600; letter-spacing:0.2em; font-size:1.1em; color:#0c0c0c;',
-                'color:#3b3833;');
-            console.log('%c studio@capstudio.com %c— Discreet inquiries',
-                'font-style:italic; color:#0c0c0c;',
-                'color:#3b3833;');
+                'font-weight:600; letter-spacing:0.2em; color:#0b0b0b;',
+                'color:#3e3a35;');
         })();
     </script>
 </body>
