@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAP Studio — Creative Intelligence Hub</title>
+    <title>CAP Studio — Creative Intelligence</title>
     <style>
         :root {
-            --bg: #f7f5f2;
-            --bg-alt: #eeebe6;
-            --text: #0d0d0d;
-            --text-sub: #4a4844;
-            --line: #d9d5cf;
-            --line-strong: #0d0d0d;
-            --inv-bg: #0d0d0d;
-            --inv-text: #f0ede9;
-            --spacing-unit: clamp(1.2rem, 3vw, 2.8rem);
-            --transition-slow: 620ms cubic-bezier(0.22, 0.01, 0.05, 1);
-            --transition-medium: 400ms cubic-bezier(0.22, 0.01, 0.05, 1);
-            --transition-fast: 280ms cubic-bezier(0.22, 0.01, 0.05, 1);
-            --header-h: 56px;
+            --bg: #f5f2ed;
+            --bg-dark: #0c0c0c;
+            --text: #0c0c0c;
+            --text-sub: #3b3833;
+            --text-light: #f5f2ed;
+            --line: #d3cfc8;
+            --line-strong: #0c0c0c;
+            --spacing: clamp(1.6rem, 4vw, 3.2rem);
+            --header-height: 64px;
+            --transition-slow: 0.7s cubic-bezier(0.23, 0.01, 0.04, 1);
+            --transition-medium: 0.4s cubic-bezier(0.23, 0.01, 0.04, 1);
+            --transition-fast: 0.22s ease;
+            --service-font: clamp(1.2rem, 2.2vw, 2rem);
         }
 
         *,
@@ -28,6 +28,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         html {
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
@@ -35,311 +36,370 @@
             background: var(--bg);
             scroll-behavior: auto;
         }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1;
             overflow-x: hidden;
-            min-height: 100vh;
-            padding-top: var(--header-h);
+            padding-top: var(--header-height);
+            transition: background-color var(--transition-slow);
         }
 
-        /* ── FIXED HEADER ── */
+        /* ── PERSISTENT HEADER ── */
         .site-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            height: var(--header-height);
             z-index: 100;
-            height: var(--header-h);
-            display: flex;
-            align-items: center;
-            padding: 0 var(--spacing-unit);
-            transition: background var(--transition-medium), border-color var(--transition-medium);
-            border-bottom: 1px solid transparent;
-            background: transparent;
-            pointer-events: none;
-        }
-        .site-header.scrolled {
-            background: rgba(247, 245, 242, 0.88);
-            border-bottom-color: rgba(13, 13, 13, 0.06);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .site-header .brand {
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--text);
-            pointer-events: auto;
-            user-select: none;
-            transition: opacity var(--transition-fast);
-        }
-
-        /* ── OPENING ── */
-        .opening {
-            min-height: calc(100vh - var(--header-h));
-            display: flex;
-            align-items: center;
-            padding: var(--spacing-unit);
-            padding-top: calc(var(--spacing-unit) + 1rem);
-            padding-bottom: calc(var(--spacing-unit) * 2);
-            position: relative;
-        }
-        .opening-inner {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .opening-line-wrap {
-            overflow: hidden;
-            display: block;
-            margin-bottom: 0.08em;
-        }
-        .opening-line {
-            display: block;
-            font-size: clamp(2.6rem, 7vw, 6.5rem);
-            font-weight: 300;
-            letter-spacing: -0.025em;
-            line-height: 1.05;
-            color: var(--text);
-            transform: translateY(105%);
-            transition: transform var(--transition-slow);
-            will-change: transform;
-        }
-        .opening-line.revealed {
-            transform: translateY(0);
-        }
-        .opening-line:nth-child(1) {
-            transition-delay: 0.1s;
-        }
-        .opening-line:nth-child(2) {
-            transition-delay: 0.28s;
-        }
-        .opening-line:nth-child(3) {
-            transition-delay: 0.46s;
-        }
-        .opening-line:nth-child(4) {
-            transition-delay: 0.64s;
-        }
-        .opening-line em {
-            font-style: italic;
-            font-weight: 360;
-        }
-        .opening-line:last-child {
-            margin-bottom: 0;
-        }
-
-        /* ── SERVICES ── */
-        .services-section {
-            padding: var(--spacing-unit);
-            padding-bottom: calc(var(--spacing-unit) * 2);
-            position: relative;
-            z-index: 2;
-        }
-        .services-inner {
-            width: 100%;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            column-gap: clamp(1.5rem, 4vw, 4rem);
-            row-gap: clamp(1.8rem, 3.5vw, 3.2rem);
-        }
-        .service-item {
-            padding-bottom: clamp(1rem, 2vw, 1.8rem);
-            border-bottom: 1px solid var(--line);
-            transition: border-color var(--transition-fast);
-            cursor: default;
-        }
-        .service-item:hover {
-            border-bottom-color: var(--line-strong);
-        }
-        .service-title {
-            font-size: clamp(1.1rem, 1.7vw, 1.5rem);
-            font-weight: 500;
-            letter-spacing: -0.01em;
-            margin-bottom: 0.45em;
-            color: var(--text);
-            line-height: 1.15;
-        }
-        .service-desc {
-            font-size: clamp(0.78rem, 0.9vw, 0.88rem);
-            font-weight: 380;
-            letter-spacing: 0.015em;
-            line-height: 1.55;
-            color: var(--text-sub);
-            max-width: 520px;
-        }
-
-        /* ── IDENTITY ── */
-        .identity-section {
-            padding: var(--spacing-unit);
-            padding-top: calc(var(--spacing-unit) * 1.5);
-            padding-bottom: calc(var(--spacing-unit) * 2.5);
-            background: var(--bg-alt);
-            position: relative;
-            z-index: 2;
-        }
-        .identity-inner {
-            width: 100%;
-            max-width: 1300px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
-            row-gap: clamp(1.5rem, 2.5vw, 2.5rem);
-        }
-        .identity-block {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity var(--transition-slow), transform var(--transition-slow);
-        }
-        .identity-block.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .identity-block:nth-child(2) {
-            transition-delay: 0.1s;
-        }
-        .identity-block:nth-child(3) {
-            transition-delay: 0.22s;
-        }
-        .identity-label {
-            font-size: 0.65rem;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            color: var(--text-sub);
-            margin-bottom: 1rem;
-            display: block;
-        }
-        .identity-text {
-            font-size: clamp(0.85rem, 1vw, 0.95rem);
-            font-weight: 380;
-            letter-spacing: 0.01em;
-            line-height: 1.7;
-            color: var(--text);
-        }
-        .identity-text strong {
-            font-weight: 500;
-        }
-
-        /* ── CTA ── */
-        .cta-section {
-            min-height: calc(100vh - var(--header-h));
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: var(--spacing-unit);
-            position: relative;
-            z-index: 10;
-            background: var(--bg);
+            pointer-events: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color var(--transition-medium), background-color var(--transition-medium);
+            background: transparent;
         }
-        .cta-core {
-            text-align: center;
-            max-width: 700px;
-            width: 100%;
+        .site-header.scrolled {
+            border-bottom-color: rgba(12, 12, 12, 0.08);
+            background: rgba(245, 242, 237, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-        .cta-headline {
-            font-size: clamp(2.4rem, 5.5vw, 4.8rem);
-            font-weight: 300;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
+        .brand-word {
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
             color: var(--text);
-            margin-bottom: 1.8rem;
-        }
-        .cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6em;
-            font-size: clamp(0.9rem, 1.2vw, 1.05rem);
-            font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: var(--inv-text);
-            background: var(--inv-bg);
-            padding: 1.1em 2.6em 1.1em 2.8em;
-            transition: background var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
-            cursor: pointer;
+            pointer-events: auto;
             position: relative;
-            user-select: none;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-        }
-        .cta-btn:hover {
-            background: #1f1f1f;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.13);
-        }
-        .cta-btn:active {
-            transform: translateY(0);
-            transition: transform 0.08s ease;
-        }
-        .cta-arrow {
             display: inline-block;
-            transition: transform var(--transition-medium);
-            font-size: 1.1em;
-            line-height: 1;
+            padding: 0 0.5rem;
+            transition: color var(--transition-medium);
         }
-        .cta-btn:hover .cta-arrow {
-            transform: translateX(6px);
+        .brand-word::before,
+        .brand-word::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 28px;
+            height: 1px;
+            background: var(--text);
+            transition: width var(--transition-medium), opacity var(--transition-medium);
+            opacity: 0.6;
         }
-        .cta-note {
-            display: block;
-            margin-top: 1.6rem;
-            font-size: clamp(0.68rem, 0.75vw, 0.72rem);
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--text-sub);
+        .brand-word::before {
+            right: 100%;
+            margin-right: 10px;
+        }
+        .brand-word::after {
+            left: 100%;
+            margin-left: 10px;
+        }
+        .site-header.scrolled .brand-word::before,
+        .site-header.scrolled .brand-word::after {
+            width: 18px;
+            opacity: 0.45;
         }
 
-        /* ── INTERSECTION OBSERVER UTILITY ── */
+        /* ── OPENING (WOW FIRST GLANCE) ── */
+        .opening {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: var(--spacing);
+            padding-top: calc(var(--spacing) + 2rem);
+            padding-bottom: calc(var(--spacing) * 2);
+            position: relative;
+            overflow: hidden;
+        }
+        .opening-inner {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .opening-line-mask {
+            overflow: hidden;
+            display: block;
+            margin-bottom: 0.05em;
+        }
+        .opening-line {
+            display: block;
+            font-size: clamp(3.2rem, 9vw, 8rem);
+            font-weight: 280;
+            letter-spacing: -0.03em;
+            line-height: 0.95;
+            color: var(--text);
+            transform: translateY(110%);
+            transition: transform var(--transition-slow), opacity 0.3s ease;
+            will-change: transform;
+            opacity: 0;
+        }
+        .opening-line.revealed {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .opening-line:nth-child(1) {
+            transition-delay: 0.15s;
+        }
+        .opening-line:nth-child(2) {
+            transition-delay: 0.32s;
+        }
+        .opening-line:nth-child(3) {
+            transition-delay: 0.5s;
+        }
+        .opening-line:nth-child(4) {
+            transition-delay: 0.68s;
+        }
+        .opening-line em {
+            font-style: italic;
+            font-weight: 320;
+        }
+        .opening-subtle-divider {
+            width: 0;
+            height: 1px;
+            background: var(--text);
+            margin: 0.6em 0 0.4em;
+            transition: width 1.2s cubic-bezier(0.23, 0.01, 0.04, 1);
+            opacity: 0.3;
+        }
+        .opening-subtle-divider.revealed {
+            width: 100%;
+        }
+
+        /* ── SERVICES (FUTURISTIC INTERACTIVE SENTENCE) ── */
+        .services-section {
+            padding: var(--spacing);
+            padding-top: calc(var(--spacing) * 1.8);
+            padding-bottom: calc(var(--spacing) * 2.2);
+            position: relative;
+            z-index: 2;
+            background: var(--bg);
+            transition: background var(--transition-slow);
+        }
+        .services-sentence {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: baseline;
+            gap: 0.25em 0.6em;
+            font-size: var(--service-font);
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            line-height: 1.4;
+            color: var(--text);
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            user-select: none;
+        }
+        .service-word {
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+            padding: 0.15em 0.25em;
+            transition: color var(--transition-fast), background var(--transition-fast);
+            border-bottom: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .service-word:hover,
+        .service-word.active {
+            color: var(--bg);
+            background: var(--text);
+            border-bottom-color: var(--text);
+        }
+        .service-sep {
+            color: var(--line-strong);
+            opacity: 0.35;
+            font-weight: 200;
+            margin: 0 0.15em;
+            pointer-events: none;
+        }
+        .services-desc-panel {
+            margin-top: clamp(2rem, 5vw, 3.5rem);
+            text-align: center;
+            min-height: 3.5rem;
+            transition: opacity var(--transition-medium), transform var(--transition-medium);
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+        }
+        .services-desc-panel.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .services-desc-text {
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
+            font-weight: 360;
+            letter-spacing: 0.01em;
+            line-height: 1.5;
+            color: var(--text-sub);
+            max-width: 680px;
+            margin: 0 auto;
+            transition: opacity 0.2s;
+        }
+
+        /* ── IDENTITY (HIGH-IMPACT TYPOGRAPHY) ── */
+        .identity-section {
+            padding: var(--spacing);
+            padding-top: calc(var(--spacing) * 2.2);
+            padding-bottom: calc(var(--spacing) * 2.6);
+            background: var(--bg-dark);
+            color: var(--text-light);
+            position: relative;
+            z-index: 2;
+            transition: background var(--transition-slow);
+        }
+        .identity-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(2rem, 5vw, 4rem);
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .identity-block {
+            border-left: 1px solid rgba(245, 242, 237, 0.25);
+            padding-left: clamp(1.2rem, 2vw, 2rem);
+        }
+        .identity-num {
+            font-size: 2.4rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 0.8rem;
+            color: rgba(245, 242, 237, 0.7);
+            display: block;
+        }
+        .identity-title {
+            font-size: 0.7rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: rgba(245, 242, 237, 0.55);
+            font-weight: 400;
+        }
+        .identity-text {
+            font-size: clamp(0.9rem, 1.05vw, 1rem);
+            font-weight: 360;
+            line-height: 1.7;
+            color: var(--text-light);
+            opacity: 0.85;
+        }
         .reveal-target {
             opacity: 0;
-            transform: translateY(18px);
+            transform: translateY(24px);
             transition: opacity var(--transition-slow), transform var(--transition-slow);
         }
         .reveal-target.revealed {
             opacity: 1;
             transform: translateY(0);
         }
+        .identity-block:nth-child(2) {
+            transition-delay: 0.08s;
+        }
+        .identity-block:nth-child(3) {
+            transition-delay: 0.18s;
+        }
+
+        /* ── CTA (INEVITABLE ACTION) ── */
+        .cta-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing);
+            background: var(--bg);
+            position: relative;
+            z-index: 10;
+        }
+        .cta-inner {
+            text-align: center;
+            max-width: 720px;
+            width: 100%;
+        }
+        .cta-headline {
+            font-size: clamp(2.8rem, 7vw, 5.8rem);
+            font-weight: 280;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            color: var(--text);
+            margin-bottom: 2rem;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7em;
+            font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+            font-weight: 550;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--text-light);
+            background: var(--bg-dark);
+            padding: 1.2em 3em 1.2em 3.2em;
+            transition: background var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+        .cta-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        .cta-btn:active {
+            transform: translateY(0);
+            transition: transform 0.06s ease;
+        }
+        .cta-arrow {
+            font-size: 1.2em;
+            transition: transform var(--transition-medium);
+            display: inline-block;
+        }
+        .cta-btn:hover .cta-arrow {
+            transform: translateX(8px);
+        }
+        .cta-note {
+            display: block;
+            margin-top: 1.8rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            opacity: 0.7;
+        }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 900px) {
-            .services-grid {
-                grid-template-columns: 1fr;
-                row-gap: clamp(1.4rem, 3vw, 2rem);
-            }
-            .service-item {
-                padding-bottom: clamp(0.8rem, 2vw, 1.2rem);
-            }
-            .identity-inner {
+            .identity-grid {
                 grid-template-columns: 1fr 1fr;
+                gap: 2rem;
             }
             .identity-block:last-child {
-                grid-column: 1 / -1;
+                grid-column: span 2;
                 max-width: 500px;
+                margin: 0 auto;
             }
             .opening-line {
-                font-size: clamp(2rem, 6vw, 4rem);
+                font-size: clamp(2.4rem, 8vw, 5rem);
             }
-            .cta-headline {
-                font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+            .services-sentence {
+                font-size: clamp(1rem, 3.5vw, 1.8rem);
+                gap: 0.3em 0.5em;
             }
         }
         @media (max-width: 600px) {
             :root {
-                --header-h: 48px;
+                --header-height: 56px;
             }
-            .site-header .brand {
+            .brand-word {
                 font-size: 0.75rem;
-                letter-spacing: 0.18em;
+                letter-spacing: 0.28em;
             }
-            .identity-inner {
+            .identity-grid {
                 grid-template-columns: 1fr;
             }
             .identity-block:last-child {
@@ -347,48 +407,22 @@
                 max-width: none;
             }
             .opening-line {
-                font-size: clamp(1.6rem, 5.5vw, 2.6rem);
+                font-size: clamp(1.8rem, 7vw, 3.2rem);
             }
-            .services-grid {
-                row-gap: 1.5rem;
+            .services-sentence {
+                font-size: 1.15rem;
+                justify-content: flex-start;
+                text-align: left;
             }
-            .service-title {
-                font-size: 1.05rem;
+            .services-desc-text {
+                font-size: 0.9rem;
             }
-            .service-desc {
+            .cta-headline {
+                font-size: 2rem;
+            }
+            .cta-btn {
+                padding: 1em 2em 1em 2.2em;
                 font-size: 0.8rem;
-                line-height: 1.5;
-            }
-            .cta-btn {
-                padding: 1em 1.8em 1em 2em;
-                font-size: 0.85rem;
-                letter-spacing: 0.08em;
-            }
-            .cta-headline {
-                font-size: 1.7rem;
-                margin-bottom: 1.4rem;
-            }
-            .cta-note {
-                font-size: 0.68rem;
-                margin-top: 1.2rem;
-            }
-        }
-        @media (max-width: 380px) {
-            .opening-line {
-                font-size: 1.35rem;
-            }
-            .service-title {
-                font-size: 0.95rem;
-            }
-            .service-desc {
-                font-size: 0.74rem;
-            }
-            .cta-headline {
-                font-size: 1.4rem;
-            }
-            .cta-btn {
-                font-size: 0.78rem;
-                padding: 0.85em 1.4em 0.85em 1.6em;
             }
         }
     </style>
@@ -396,84 +430,62 @@
 <body>
     <!-- FIXED HEADER -->
     <header class="site-header" id="siteHeader" aria-label="Site header">
-        <span class="brand">CAP STUDIO</span>
+        <span class="brand-word">CAP STUDIO</span>
     </header>
 
-    <!-- OPENING -->
-    <section class="opening" id="openingSection" aria-label="Opening statement">
+    <!-- OPENING (WOW) -->
+    <section class="opening" id="openingSection" aria-label="Manifesto">
         <div class="opening-inner">
-            <span class="opening-line-wrap"><span class="opening-line" id="openLine1">Find your world.</span></span>
-            <span class="opening-line-wrap"><span class="opening-line" id="openLine2">Speak to your world.</span></span>
-            <span class="opening-line-wrap"><span class="opening-line" id="openLine3">Make products to <em>fill</em> that world.</span></span>
-            <span class="opening-line-wrap"><span class="opening-line" id="openLine4">Allow people to buy into the world you've built.</span></span>
+            <span class="opening-line-mask"><span class="opening-line" id="line1">Find your world.</span></span>
+            <span class="opening-line-mask"><span class="opening-line" id="line2">Speak to your world.</span></span>
+            <span class="opening-line-mask"><span class="opening-line" id="line3">Make products to <em>fill</em> that world.</span></span>
+            <span class="opening-line-mask"><span class="opening-line" id="line4">Allow people to buy into the world you've built.</span></span>
+            <div class="opening-subtle-divider" id="openingDivider"></div>
         </div>
     </section>
 
-    <!-- SERVICES -->
-    <section class="services-section" id="servicesSection" aria-label="Services">
-        <div class="services-inner">
-            <div class="services-grid">
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Atelier</h3>
-                    <p class="service-desc">Bespoke creative workshop combining traditional craftsmanship with cutting-edge innovation.</p>
-                </div>
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Brand Maturation</h3>
-                    <p class="service-desc">Strategic evolution of brand identity and positioning to achieve market dominance.</p>
-                </div>
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Development</h3>
-                    <p class="service-desc">Full-spectrum product and concept development from ideation to market launch.</p>
-                </div>
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Streamlined Production</h3>
-                    <p class="service-desc">Optimized production workflows that maximize efficiency and creative output.</p>
-                </div>
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Management</h3>
-                    <p class="service-desc">Comprehensive project and talent management ensuring seamless execution.</p>
-                </div>
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Advanced Strategy</h3>
-                    <p class="service-desc">Data-driven strategic planning with predictive market intelligence.</p>
-                </div>
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Collection Designs &amp; Build</h3>
-                    <p class="service-desc">End-to-end collection creation from conceptual design to final production.</p>
-                </div>
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Sales &amp; Marketing Agenda</h3>
-                    <p class="service-desc">Integrated sales and marketing roadmaps designed for maximum market penetration.</p>
-                </div>
-                <div class="service-item reveal-target">
-                    <h3 class="service-title">Bridge360</h3>
-                    <p class="service-desc">Holistic 360-degree brand connectivity across all touchpoints and channels.</p>
-                </div>
-            </div>
+    <!-- SERVICES (INTERACTIVE SENTENCE) -->
+    <section class="services-section" id="servicesSection" aria-label="Capabilities">
+        <div class="services-sentence" id="servicesSentence">
+            <span class="service-word" data-desc="Bespoke creative workshop blending traditional craftsmanship with cutting-edge innovation.">Atelier</span><span class="service-sep">/</span>
+            <span class="service-word" data-desc="Strategic evolution of brand identity and positioning to achieve market dominance.">Brand Maturation</span><span class="service-sep">/</span>
+            <span class="service-word" data-desc="Full-spectrum product and concept development from ideation to market launch.">Development</span><span class="service-sep">/</span>
+            <span class="service-word" data-desc="Optimized production workflows that maximize efficiency and creative output.">Streamlined Production</span><span class="service-sep">/</span>
+            <span class="service-word" data-desc="Comprehensive project and talent management ensuring seamless execution.">Management</span><span class="service-sep">/</span>
+            <span class="service-word" data-desc="Data-driven strategic planning with predictive market intelligence.">Advanced Strategy</span><span class="service-sep">/</span>
+            <span class="service-word" data-desc="End-to-end collection creation from conceptual design to final production.">Collection Designs & Build</span><span class="service-sep">/</span>
+            <span class="service-word" data-desc="Integrated sales and marketing roadmaps for maximum market penetration.">Sales & Marketing Agenda</span><span class="service-sep">/</span>
+            <span class="service-word" data-desc="Holistic 360° brand connectivity across all touchpoints and channels.">Bridge360</span>
+        </div>
+        <div class="services-desc-panel" id="servicesDescPanel">
+            <p class="services-desc-text" id="servicesDescText"></p>
         </div>
     </section>
 
-    <!-- IDENTITY -->
+    <!-- IDENTITY (HIGH-IMPACT) -->
     <section class="identity-section" id="identitySection" aria-label="About">
-        <div class="identity-inner">
+        <div class="identity-grid">
             <div class="identity-block reveal-target">
-                <span class="identity-label">Our Foundation</span>
-                <p class="identity-text"><strong>CAP Studio</strong> is a multidisciplinary international agency headquartered in Miami, developing and implementing cross-cultural strategies with partners worldwide.</p>
+                <span class="identity-num">01</span>
+                <span class="identity-title">Foundation</span>
+                <p class="identity-text">CAP Studio is a multidisciplinary international agency headquartered in Miami, developing and implementing cross-cultural strategies with partners worldwide.</p>
             </div>
             <div class="identity-block reveal-target">
-                <span class="identity-label">Methodology</span>
+                <span class="identity-num">02</span>
+                <span class="identity-title">Method</span>
                 <p class="identity-text">Operating as a 360° creative intelligence hub, we employ a free-form methodology that delivers dedicated, tailor-made support, strategic direction, and comprehensive assistance.</p>
             </div>
             <div class="identity-block reveal-target">
-                <span class="identity-label">Network</span>
+                <span class="identity-num">03</span>
+                <span class="identity-title">Network</span>
                 <p class="identity-text">Our global network forms the foundation for deep counter-culture understanding, providing clients with an influential platform for personal brand architecture, aesthetic evolution, and the elevation of visionary projects.</p>
             </div>
         </div>
     </section>
 
-    <!-- CTA -->
-    <section class="cta-section" id="ctaSection" aria-label="Call to action">
-        <div class="cta-core">
+    <!-- CTA (INEVITABLE) -->
+    <section class="cta-section" id="ctaSection" aria-label="Contact">
+        <div class="cta-inner">
             <h2 class="cta-headline reveal-target">Ready to disappear<br>from the noise?</h2>
             <a href="mailto:studio@capstudio.com" class="cta-btn reveal-target" id="ctaButton">
                 INQUIRE
@@ -485,97 +497,129 @@
 
     <script>
         (function() {
-            // ── DOM REFS ──
+            // DOM refs
             const header = document.getElementById('siteHeader');
-            const openingSection = document.getElementById('openingSection');
-            const openLine1 = document.getElementById('openLine1');
-            const openLine2 = document.getElementById('openLine2');
-            const openLine3 = document.getElementById('openLine3');
-            const openLine4 = document.getElementById('openLine4');
+            const line1 = document.getElementById('line1');
+            const line2 = document.getElementById('line2');
+            const line3 = document.getElementById('line3');
+            const line4 = document.getElementById('line4');
+            const divider = document.getElementById('openingDivider');
+            const servicesSentence = document.getElementById('servicesSentence');
+            const descPanel = document.getElementById('servicesDescPanel');
+            const descText = document.getElementById('servicesDescText');
             const ctaButton = document.getElementById('ctaButton');
+            const revealTargets = document.querySelectorAll('.reveal-target');
 
-            // ── HEADER SCROLL STATE ──
+            // ── HEADER SCROLL ──
             let headerTicking = false;
-            const updateHeader = function() {
-                const scrollY = window.scrollY || window.pageYOffset;
-                if (scrollY > 30) {
+            const updateHeader = () => {
+                const y = window.scrollY || window.pageYOffset;
+                if (y > 40) {
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
                 }
                 headerTicking = false;
             };
+            window.addEventListener('scroll', () => {
+                if (!headerTicking) {
+                    requestAnimationFrame(updateHeader);
+                    headerTicking = true;
+                }
+            }, { passive: true });
+            updateHeader();
 
-            window.addEventListener('scroll', function() {
+            // ── OPENING REVEAL ──
+            const revealOpening = () => {
+                if (line1) line1.classList.add('revealed');
+                if (line2) line2.classList.add('revealed');
+                if (line3) line3.classList.add('revealed');
+                if (line4) line4.classList.add('revealed');
+                if (divider) divider.classList.add('revealed');
+            };
+            setTimeout(revealOpening, 200);
+
+            // ── SERVICES INTERACTIVE SENTENCE ──
+            const serviceWords = servicesSentence ? servicesSentence.querySelectorAll('.service-word') : [];
+            let activeWord = null;
+            let hideTimeout = null;
+
+            const showDescription = (word) => {
+                if (activeWord === word) return;
+                // Remove active class from previous
+                if (activeWord) activeWord.classList.remove('active');
+                const desc = word.getAttribute('data-desc');
+                if (desc) {
+                    descText.textContent = desc;
+                    descPanel.classList.add('visible');
+                }
+                word.classList.add('active');
+                activeWord = word;
+                if (hideTimeout) clearTimeout(hideTimeout);
+            };
+
+            const hideDescription = (delay = 400) => {
+                if (hideTimeout) clearTimeout(hideTimeout);
+                hideTimeout = setTimeout(() => {
+                    if (activeWord) activeWord.classList.remove('active');
+                    descPanel.classList.remove('visible');
+                    activeWord = null;
+                }, delay);
+            };
+
+            serviceWords.forEach(word => {
+                word.addEventListener('mouseenter', () => showDescription(word));
+                word.addEventListener('mouseleave', () => hideDescription(500));
+                word.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // toggle on touch devices: if already active, hide; else show
+                    if (activeWord === word && descPanel.classList.contains('visible')) {
+                        hideDescription(0);
+                    } else {
+                        showDescription(word);
+                    }
+                });
+            });
+
+            // If mouse leaves the whole sentence area, hide after delay
+            if (servicesSentence) {
+                servicesSentence.addEventListener('mouseleave', () => hideDescription(600));
+            }
+
+            // ── INTERSECTION OBSERVER ──
+            const observerOptions = { root: null, rootMargin: '0px 0px -4% 0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            revealTargets.forEach(el => observer.observe(el));
+
+            // ── CTA CLICK ──
+            if (ctaButton) {
+                ctaButton.addEventListener('click', (e) => {
+                    // mailto will proceed
+                });
+            }
+
+            // Resize handler
+            window.addEventListener('resize', () => {
                 if (!headerTicking) {
                     requestAnimationFrame(updateHeader);
                     headerTicking = true;
                 }
             }, { passive: true });
 
-            // Initial check
-            updateHeader();
-
-            // ── OPENING TEXT REVEAL ──
-            const revealOpeningLines = function() {
-                if (openLine1) openLine1.classList.add('revealed');
-                if (openLine2) openLine2.classList.add('revealed');
-                if (openLine3) openLine3.classList.add('revealed');
-                if (openLine4) openLine4.classList.add('revealed');
-            };
-
-            // Trigger shortly after load
-            setTimeout(revealOpeningLines, 180);
-
-            // ── INTERSECTION OBSERVER ──
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px 0px -6% 0px',
-                threshold: 0.08,
-            };
-
-            const revealObserver = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed');
-                        // Unobserve after revealing for performance
-                        revealObserver.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all reveal-target elements
-            const revealTargets = document.querySelectorAll('.reveal-target');
-            revealTargets.forEach(function(el) {
-                revealObserver.observe(el);
-            });
-
-            // ── CTA BUTTON CLICK ──
-            if (ctaButton) {
-                ctaButton.addEventListener('click', function(e) {
-                    // Allow default mailto behavior
-                    // Could add analytics tracking here
-                });
-            }
-
-            // ── RESIZE HANDLER ──
-            let resizeTicking = false;
-            window.addEventListener('resize', function() {
-                if (!resizeTicking) {
-                    requestAnimationFrame(function() {
-                        updateHeader();
-                        resizeTicking = false;
-                    });
-                    resizeTicking = true;
-                }
-            }, { passive: true });
-
-            console.log('%c CAP Studio %c Creative Intelligence Hub ',
-                'font-weight:500;font-size:1.1em;letter-spacing:0.04em;color:#0d0d0d;',
-                'font-weight:380;color:#4a4844;');
-            console.log('%c studio@capstudio.com %c— Confidential inquiries',
-                'font-style:italic;color:#0d0d0d;',
-                'color:#4a4844;');
+            console.log('%c CAP STUDIO %c— Creative Intelligence Hub',
+                'font-weight:600; letter-spacing:0.2em; font-size:1.1em; color:#0c0c0c;',
+                'color:#3b3833;');
+            console.log('%c studio@capstudio.com %c— Discreet inquiries',
+                'font-style:italic; color:#0c0c0c;',
+                'color:#3b3833;');
         })();
     </script>
 </body>
