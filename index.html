@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAP Studio — Creative Intelligence Hub</title>
+    <style>
+        :root {
+            --bg: #f7f5f2;
+            --bg-alt: #eeebe6;
+            --text: #0d0d0d;
+            --text-sub: #4a4844;
+            --line: #d9d5cf;
+            --line-strong: #0d0d0d;
+            --inv-bg: #0d0d0d;
+            --inv-text: #f0ede9;
+            --spacing-unit: clamp(1.2rem, 3vw, 2.8rem);
+            --transition-slow: 620ms cubic-bezier(0.22, 0.01, 0.05, 1);
+            --transition-medium: 400ms cubic-bezier(0.22, 0.01, 0.05, 1);
+            --transition-fast: 280ms cubic-bezier(0.22, 0.01, 0.05, 1);
+            --header-h: 56px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: var(--bg);
+            scroll-behavior: auto;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1;
+            overflow-x: hidden;
+            min-height: 100vh;
+            padding-top: var(--header-h);
+        }
+
+        /* ── FIXED HEADER ── */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            height: var(--header-h);
+            display: flex;
+            align-items: center;
+            padding: 0 var(--spacing-unit);
+            transition: background var(--transition-medium), border-color var(--transition-medium);
+            border-bottom: 1px solid transparent;
+            background: transparent;
+            pointer-events: none;
+        }
+        .site-header.scrolled {
+            background: rgba(247, 245, 242, 0.88);
+            border-bottom-color: rgba(13, 13, 13, 0.06);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .site-header .brand {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text);
+            pointer-events: auto;
+            user-select: none;
+            transition: opacity var(--transition-fast);
+        }
+
+        /* ── OPENING ── */
+        .opening {
+            min-height: calc(100vh - var(--header-h));
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-unit);
+            padding-top: calc(var(--spacing-unit) + 1rem);
+            padding-bottom: calc(var(--spacing-unit) * 2);
+            position: relative;
+        }
+        .opening-inner {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .opening-line-wrap {
+            overflow: hidden;
+            display: block;
+            margin-bottom: 0.08em;
+        }
+        .opening-line {
+            display: block;
+            font-size: clamp(2.6rem, 7vw, 6.5rem);
+            font-weight: 300;
+            letter-spacing: -0.025em;
+            line-height: 1.05;
+            color: var(--text);
+            transform: translateY(105%);
+            transition: transform var(--transition-slow);
+            will-change: transform;
+        }
+        .opening-line.revealed {
+            transform: translateY(0);
+        }
+        .opening-line:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+        .opening-line:nth-child(2) {
+            transition-delay: 0.28s;
+        }
+        .opening-line:nth-child(3) {
+            transition-delay: 0.46s;
+        }
+        .opening-line:nth-child(4) {
+            transition-delay: 0.64s;
+        }
+        .opening-line em {
+            font-style: italic;
+            font-weight: 360;
+        }
+        .opening-line:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ── SERVICES ── */
+        .services-section {
+            padding: var(--spacing-unit);
+            padding-bottom: calc(var(--spacing-unit) * 2);
+            position: relative;
+            z-index: 2;
+        }
+        .services-inner {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: clamp(1.5rem, 4vw, 4rem);
+            row-gap: clamp(1.8rem, 3.5vw, 3.2rem);
+        }
+        .service-item {
+            padding-bottom: clamp(1rem, 2vw, 1.8rem);
+            border-bottom: 1px solid var(--line);
+            transition: border-color var(--transition-fast);
+            cursor: default;
+        }
+        .service-item:hover {
+            border-bottom-color: var(--line-strong);
+        }
+        .service-title {
+            font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.45em;
+            color: var(--text);
+            line-height: 1.15;
+        }
+        .service-desc {
+            font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+            font-weight: 380;
+            letter-spacing: 0.015em;
+            line-height: 1.55;
+            color: var(--text-sub);
+            max-width: 520px;
+        }
+
+        /* ── IDENTITY ── */
+        .identity-section {
+            padding: var(--spacing-unit);
+            padding-top: calc(var(--spacing-unit) * 1.5);
+            padding-bottom: calc(var(--spacing-unit) * 2.5);
+            background: var(--bg-alt);
+            position: relative;
+            z-index: 2;
+        }
+        .identity-inner {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
+            row-gap: clamp(1.5rem, 2.5vw, 2.5rem);
+        }
+        .identity-block {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity var(--transition-slow), transform var(--transition-slow);
+        }
+        .identity-block.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .identity-block:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        .identity-block:nth-child(3) {
+            transition-delay: 0.22s;
+        }
+        .identity-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .identity-text {
+            font-size: clamp(0.85rem, 1vw, 0.95rem);
+            font-weight: 380;
+            letter-spacing: 0.01em;
+            line-height: 1.7;
+            color: var(--text);
+        }
+        .identity-text strong {
+            font-weight: 500;
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            min-height: calc(100vh - var(--header-h));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-unit);
+            position: relative;
+            z-index: 10;
+            background: var(--bg);
+        }
+        .cta-core {
+            text-align: center;
+            max-width: 700px;
+            width: 100%;
+        }
+        .cta-headline {
+            font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+            font-weight: 300;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            color: var(--text);
+            margin-bottom: 1.8rem;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6em;
+            font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--inv-text);
+            background: var(--inv-bg);
+            padding: 1.1em 2.6em 1.1em 2.8em;
+            transition: background var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+        .cta-btn:hover {
+            background: #1f1f1f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.13);
+        }
+        .cta-btn:active {
+            transform: translateY(0);
+            transition: transform 0.08s ease;
+        }
+        .cta-arrow {
+            display: inline-block;
+            transition: transform var(--transition-medium);
+            font-size: 1.1em;
+            line-height: 1;
+        }
+        .cta-btn:hover .cta-arrow {
+            transform: translateX(6px);
+        }
+        .cta-note {
+            display: block;
+            margin-top: 1.6rem;
+            font-size: clamp(0.68rem, 0.75vw, 0.72rem);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-sub);
+        }
+
+        /* ── INTERSECTION OBSERVER UTILITY ── */
+        .reveal-target {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity var(--transition-slow), transform var(--transition-slow);
+        }
+        .reveal-target.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                row-gap: clamp(1.4rem, 3vw, 2rem);
+            }
+            .service-item {
+                padding-bottom: clamp(0.8rem, 2vw, 1.2rem);
+            }
+            .identity-inner {
+                grid-template-columns: 1fr 1fr;
+            }
+            .identity-block:last-child {
+                grid-column: 1 / -1;
+                max-width: 500px;
+            }
+            .opening-line {
+                font-size: clamp(2rem, 6vw, 4rem);
+            }
+            .cta-headline {
+                font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+            }
+        }
+        @media (max-width: 600px) {
+            :root {
+                --header-h: 48px;
+            }
+            .site-header .brand {
+                font-size: 0.75rem;
+                letter-spacing: 0.18em;
+            }
+            .identity-inner {
+                grid-template-columns: 1fr;
+            }
+            .identity-block:last-child {
+                grid-column: auto;
+                max-width: none;
+            }
+            .opening-line {
+                font-size: clamp(1.6rem, 5.5vw, 2.6rem);
+            }
+            .services-grid {
+                row-gap: 1.5rem;
+            }
+            .service-title {
+                font-size: 1.05rem;
+            }
+            .service-desc {
+                font-size: 0.8rem;
+                line-height: 1.5;
+            }
+            .cta-btn {
+                padding: 1em 1.8em 1em 2em;
+                font-size: 0.85rem;
+                letter-spacing: 0.08em;
+            }
+            .cta-headline {
+                font-size: 1.7rem;
+                margin-bottom: 1.4rem;
+            }
+            .cta-note {
+                font-size: 0.68rem;
+                margin-top: 1.2rem;
+            }
+        }
+        @media (max-width: 380px) {
+            .opening-line {
+                font-size: 1.35rem;
+            }
+            .service-title {
+                font-size: 0.95rem;
+            }
+            .service-desc {
+                font-size: 0.74rem;
+            }
+            .cta-headline {
+                font-size: 1.4rem;
+            }
+            .cta-btn {
+                font-size: 0.78rem;
+                padding: 0.85em 1.4em 0.85em 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- FIXED HEADER -->
+    <header class="site-header" id="siteHeader" aria-label="Site header">
+        <span class="brand">CAP STUDIO</span>
+    </header>
+
+    <!-- OPENING -->
+    <section class="opening" id="openingSection" aria-label="Opening statement">
+        <div class="opening-inner">
+            <span class="opening-line-wrap"><span class="opening-line" id="openLine1">Find your world.</span></span>
+            <span class="opening-line-wrap"><span class="opening-line" id="openLine2">Speak to your world.</span></span>
+            <span class="opening-line-wrap"><span class="opening-line" id="openLine3">Make products to <em>fill</em> that world.</span></span>
+            <span class="opening-line-wrap"><span class="opening-line" id="openLine4">Allow people to buy into the world you've built.</span></span>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services-section" id="servicesSection" aria-label="Services">
+        <div class="services-inner">
+            <div class="services-grid">
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Atelier</h3>
+                    <p class="service-desc">Bespoke creative workshop combining traditional craftsmanship with cutting-edge innovation.</p>
+                </div>
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Brand Maturation</h3>
+                    <p class="service-desc">Strategic evolution of brand identity and positioning to achieve market dominance.</p>
+                </div>
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Development</h3>
+                    <p class="service-desc">Full-spectrum product and concept development from ideation to market launch.</p>
+                </div>
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Streamlined Production</h3>
+                    <p class="service-desc">Optimized production workflows that maximize efficiency and creative output.</p>
+                </div>
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Management</h3>
+                    <p class="service-desc">Comprehensive project and talent management ensuring seamless execution.</p>
+                </div>
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Advanced Strategy</h3>
+                    <p class="service-desc">Data-driven strategic planning with predictive market intelligence.</p>
+                </div>
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Collection Designs &amp; Build</h3>
+                    <p class="service-desc">End-to-end collection creation from conceptual design to final production.</p>
+                </div>
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Sales &amp; Marketing Agenda</h3>
+                    <p class="service-desc">Integrated sales and marketing roadmaps designed for maximum market penetration.</p>
+                </div>
+                <div class="service-item reveal-target">
+                    <h3 class="service-title">Bridge360</h3>
+                    <p class="service-desc">Holistic 360-degree brand connectivity across all touchpoints and channels.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IDENTITY -->
+    <section class="identity-section" id="identitySection" aria-label="About">
+        <div class="identity-inner">
+            <div class="identity-block reveal-target">
+                <span class="identity-label">Our Foundation</span>
+                <p class="identity-text"><strong>CAP Studio</strong> is a multidisciplinary international agency headquartered in Miami, developing and implementing cross-cultural strategies with partners worldwide.</p>
+            </div>
+            <div class="identity-block reveal-target">
+                <span class="identity-label">Methodology</span>
+                <p class="identity-text">Operating as a 360° creative intelligence hub, we employ a free-form methodology that delivers dedicated, tailor-made support, strategic direction, and comprehensive assistance.</p>
+            </div>
+            <div class="identity-block reveal-target">
+                <span class="identity-label">Network</span>
+                <p class="identity-text">Our global network forms the foundation for deep counter-culture understanding, providing clients with an influential platform for personal brand architecture, aesthetic evolution, and the elevation of visionary projects.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="ctaSection" aria-label="Call to action">
+        <div class="cta-core">
+            <h2 class="cta-headline reveal-target">Ready to disappear<br>from the noise?</h2>
+            <a href="mailto:studio@capstudio.com" class="cta-btn reveal-target" id="ctaButton">
+                INQUIRE
+                <span class="cta-arrow">→</span>
+            </a>
+            <span class="cta-note reveal-target">Serious inquiries only. Confidentiality guaranteed.</span>
+        </div>
+    </section>
+
+    <script>
+        (function() {
+            // ── DOM REFS ──
+            const header = document.getElementById('siteHeader');
+            const openingSection = document.getElementById('openingSection');
+            const openLine1 = document.getElementById('openLine1');
+            const openLine2 = document.getElementById('openLine2');
+            const openLine3 = document.getElementById('openLine3');
+            const openLine4 = document.getElementById('openLine4');
+            const ctaButton = document.getElementById('ctaButton');
+
+            // ── HEADER SCROLL STATE ──
+            let headerTicking = false;
+            const updateHeader = function() {
+                const scrollY = window.scrollY || window.pageYOffset;
+                if (scrollY > 30) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                headerTicking = false;
+            };
+
+            window.addEventListener('scroll', function() {
+                if (!headerTicking) {
+                    requestAnimationFrame(updateHeader);
+                    headerTicking = true;
+                }
+            }, { passive: true });
+
+            // Initial check
+            updateHeader();
+
+            // ── OPENING TEXT REVEAL ──
+            const revealOpeningLines = function() {
+                if (openLine1) openLine1.classList.add('revealed');
+                if (openLine2) openLine2.classList.add('revealed');
+                if (openLine3) openLine3.classList.add('revealed');
+                if (openLine4) openLine4.classList.add('revealed');
+            };
+
+            // Trigger shortly after load
+            setTimeout(revealOpeningLines, 180);
+
+            // ── INTERSECTION OBSERVER ──
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -6% 0px',
+                threshold: 0.08,
+            };
+
+            const revealObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        // Unobserve after revealing for performance
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all reveal-target elements
+            const revealTargets = document.querySelectorAll('.reveal-target');
+            revealTargets.forEach(function(el) {
+                revealObserver.observe(el);
+            });
+
+            // ── CTA BUTTON CLICK ──
+            if (ctaButton) {
+                ctaButton.addEventListener('click', function(e) {
+                    // Allow default mailto behavior
+                    // Could add analytics tracking here
+                });
+            }
+
+            // ── RESIZE HANDLER ──
+            let resizeTicking = false;
+            window.addEventListener('resize', function() {
+                if (!resizeTicking) {
+                    requestAnimationFrame(function() {
+                        updateHeader();
+                        resizeTicking = false;
+                    });
+                    resizeTicking = true;
+                }
+            }, { passive: true });
+
+            console.log('%c CAP Studio %c Creative Intelligence Hub ',
+                'font-weight:500;font-size:1.1em;letter-spacing:0.04em;color:#0d0d0d;',
+                'font-weight:380;color:#4a4844;');
+            console.log('%c studio@capstudio.com %c— Confidential inquiries',
+                'font-style:italic;color:#0d0d0d;',
+                'color:#4a4844;');
+        })();
+    </script>
+</body>
+</html>
