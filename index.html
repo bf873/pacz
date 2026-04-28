@@ -682,7 +682,7 @@
         }
 
         /* ============ SERVICES GRID ============ */
-        /* 8 services in a responsive grid, Cap360 featured separately */
+        /* 8 services in a responsive grid, Bridge360 featured separately */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -754,9 +754,9 @@
             opacity: 1;
         }
 
-        /* ============ CAP360 FEATURE SECTION ============ */
+        /* ============ BRIDGE360 FEATURE SECTION ============ */
         /* Standout full-bleed-style feature card */
-        .cap360-card {
+        .bridge360-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-medium);
             border-radius: var(--radius-xl);
@@ -765,7 +765,7 @@
             overflow: hidden;
             transition: all var(--transition-smooth);
         }
-        .cap360-card::before {
+        .bridge360-card::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -777,15 +777,15 @@
             pointer-events: none;
             transition: all var(--transition-smooth);
         }
-        .cap360-card:hover::before {
+        .bridge360-card:hover::before {
             top: -40%;
             right: -20%;
         }
-        .cap360-card:hover {
+        .bridge360-card:hover {
             border-color: var(--border-hover);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
         }
-        .cap360-label {
+        .bridge360-label {
             font-family: var(--font-body);
             font-size: 0.7rem;
             font-weight: 500;
@@ -795,7 +795,7 @@
             margin-bottom: 0.75rem;
             display: block;
         }
-        .cap360-title {
+        .bridge360-title {
             font-family: var(--font-heading);
             font-weight: 800;
             font-size: clamp(2rem, 5vw, 3.5rem);
@@ -805,7 +805,7 @@
             position: relative;
             z-index: 1;
         }
-        .cap360-desc {
+        .bridge360-desc {
             font-family: var(--font-body);
             font-weight: 300;
             font-size: 1.1rem;
@@ -1075,7 +1075,7 @@
                 width: 350px;
                 height: 350px;
             }
-            .cap360-card::before {
+            .bridge360-card::before {
                 width: 300px;
                 height: 300px;
                 top: -20%;
@@ -1113,7 +1113,7 @@
             .hero-geometry {
                 display: none;
             }
-            .cap360-card {
+            .bridge360-card {
                 padding: 1.5rem;
             }
             .btn-magnetic {
@@ -1168,7 +1168,7 @@
         <a href="#hero" data-nav-close>Home</a>
         <a href="#philosophy" data-nav-close>About</a>
         <a href="#services" data-nav-close>Services</a>
-        <a href="#cap360" data-nav-close>Cap360</a>
+        <a href="#bridge360" data-nav-close>Bridge360</a>
         <a href="#contact" data-nav-close>Contact</a>
     </div>
 
@@ -1182,7 +1182,7 @@
             <ul class="nav-links">
                 <li><a href="#philosophy">About</a></li>
                 <li><a href="#services">Services</a></li>
-                <li><a href="#cap360">Cap360</a></li>
+                <li><a href="#bridge360">Bridge360</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <a href="#contact" class="nav-cta">Inquire</a>
@@ -1231,7 +1231,7 @@
             <span class="section-label reveal">About Us</span>
             <div class="philosophy-grid reveal">
                 <blockquote class="philosophy-quote">
-                    CAP Studio is a multidisciplinary international agency headquartered in Miami, developing and implementing cross-cultural strategies with partners worldwide.
+                    We are a multidisciplinary international agency, developing and implementing cross-cultural strategies with partners worldwide.
                 </blockquote>
                 <div class="philosophy-text">
                     <p>
@@ -1246,7 +1246,7 @@
                         aesthetic evolution, and the elevation of visionary projects.
                     </p>
                     <p style="margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
-                        Operating worldwide. Established in 2012.
+                        MIAMI / WORLDWIDE
                     </p>
                 </div>
             </div>
@@ -1261,7 +1261,7 @@
             <span class="section-label reveal">Capabilities</span>
             <h2 class="section-title reveal" id="servicesTitle">Precision-crafted services for those who demand more.</h2>
             <p class="section-subtitle reveal" style="margin-bottom:2.5rem;">
-                From conceptual design to market dominance — every service is a bespoke solution engineered for impact.
+                We use free-form methodologies that deliver dedicated, tailor-made support, clear strategic direction and comprehensive assistance.
             </p>
             <div class="services-grid reveal-stagger">
                 <!-- Service 1: Atelier -->
@@ -1323,19 +1323,19 @@
             </div>
         </section>
 
-        <!-- ============ CAP360 FEATURE SECTION ============ -->
-        <!-- Standout highlight card for the flagship Cap360 offering -->
-        <section class="section" id="cap360" aria-labelledby="cap360Title">
-            <div class="cap360-card reveal">
-                <span class="cap360-label">Limited Availability — Selective Partnerships</span>
-                <h2 class="cap360-title" id="cap360Title">CAP360</h2>
-                <p class="cap360-desc">
+        <!-- ============ BRIDGE360 FEATURE SECTION ============ -->
+        <!-- Standout highlight card for the flagship Bridge360 offering -->
+        <section class="section" id="bridge360" aria-labelledby="bridge360Title">
+            <div class="bridge360-card reveal">
+                <span class="bridge360-label">Limited Availability — Selective Partnerships</span>
+                <h2 class="bridge360-title" id="bridge360Title">BRIDGE360</h2>
+                <p class="bridge360-desc">
                     Holistic 360-degree brand connectivity across all touchpoints and channels.
                     We unify your visual identity, messaging, digital presence, and physical experiences
                     into one seamless, powerful ecosystem that commands attention and builds loyalty.
                 </p>
                 <a href="#contact" class="btn btn-primary" style="margin-top:2rem;position:relative;z-index:1;">
-                    Explore Cap360 <span class="btn-arrow">↗</span>
+                    Explore Bridge360 <span class="btn-arrow">↗</span>
                 </a>
             </div>
         </section>
