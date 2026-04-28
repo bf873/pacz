@@ -3,609 +3,1593 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAP Studio — Creative Intelligence Hub</title>
+    <meta name="description" content="CAP Studio — 360° Creative Intelligence Hub. Bespoke brand architecture, strategy, and production for artists and industry leaders.">
+    <title>CAP Studio | 360° Creative Intelligence</title>
+
+    <!-- Google Fonts: Syne for bold headings, Inter for clean body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
     <style>
+        /* ============ CSS CUSTOM PROPERTIES ============ */
         :root {
-            --bg: #f4f1ec;
-            --bg-dark: #0b0b0b;
-            --text: #0b0b0b;
-            --text-sub: #3e3a35;
-            --text-light: #f4f1ec;
-            --line: #d3cfc8;
-            --line-strong: #0b0b0b;
-            --spacing: clamp(1.8rem, 5vw, 3.5rem);
-            --header-h: 72px;
-            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-            --ease-in-out: cubic-bezier(0.77, 0.01, 0.11, 1);
+            --bg-deep: #050505;
+            --bg-primary: #0a0a0a;
+            --bg-surface: #111111;
+            --bg-card: #161616;
+            --bg-card-hover: #1c1c1c;
+            --text-primary: #f5f0eb;
+            --text-secondary: #b8b0a6;
+            --text-muted: #6b635a;
+            --accent: #d4a853;
+            --accent-bright: #e8c464;
+            --accent-glow: rgba(212, 168, 83, 0.25);
+            --accent-glow-strong: rgba(212, 168, 83, 0.5);
+            --border-subtle: rgba(255, 255, 255, 0.05);
+            --border-medium: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(212, 168, 83, 0.35);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-reveal: 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+            --font-heading: 'Syne', 'Inter', sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --max-width: 1400px;
+            --nav-height: 80px;
         }
 
+        /* ============ RESET & BASE ============ */
         *,
         *::before,
         *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         html {
-            font-size: 16px;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #2a2a2a #0a0a0a;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            background: var(--bg);
-            scroll-behavior: auto;
+        }
+
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a3a3a;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.1;
+            font-family: var(--font-body);
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.6;
             overflow-x: hidden;
-            padding-top: var(--header-h);
-            transition: background-color 0.6s ease;
+            min-height: 100vh;
+            position: relative;
         }
 
-        /* ── PERSISTENT HEADER ── */
-        .site-header {
+        /* ============ GRAIN / NOISE TEXTURE OVERLAY ============ */
+        /* Subtle film-grain texture for premium tactile feel */
+        .grain-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: var(--header-h);
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            padding: 0 var(--spacing);
-            background: transparent;
-            transition: background 0.3s ease, backdrop-filter 0.3s ease;
+            height: 100%;
             pointer-events: none;
-            border-bottom: 1px solid transparent;
-        }
-        .site-header.scrolled {
-            background: rgba(244, 241, 236, 0.75);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom-color: rgba(11, 11, 11, 0.07);
-        }
-        .brand {
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--text);
-            pointer-events: auto;
-            user-select: none;
-            opacity: 0.9;
-            transition: color 0.3s ease;
+            z-index: 9999;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
         }
 
-        /* ── SCROLL STAGE ── */
-        .scroll-stage {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ── OPENING (MORPHING MANIFESTO) ── */
-        .opening {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--spacing);
-            background: var(--bg);
-            transition: background 0.6s;
-        }
-        .opening-canvas {
-            width: 100%;
-            max-width: 1200px;
-            position: relative;
-            height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .morph-line {
-            display: inline-block;
-            font-size: clamp(3.5rem, 10vw, 8rem);
-            font-weight: 270;
-            letter-spacing: -0.035em;
-            line-height: 0.9;
-            color: var(--text);
-            white-space: nowrap;
-            transition: transform 0.9s var(--ease-out-expo), opacity 0.6s ease;
-            will-change: transform, opacity;
-            position: relative;
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        .morph-line:nth-child(1) { transition-delay: 0.05s; }
-        .morph-line:nth-child(2) { transition-delay: 0.12s; }
-        .morph-line:nth-child(3) { transition-delay: 0.2s; }
-        .morph-line:nth-child(4) { transition-delay: 0.28s; }
-
-        .morph-line em {
-            font-style: italic;
-            font-weight: 320;
-        }
-
-        /* When scrolled past opening, lines move to corners */
-        .opening.morphed .morph-line {
+        /* ============ NAVIGATION ============ */
+        /* Fixed nav with backdrop-blur for premium glass effect */
+        .nav {
             position: fixed;
-            z-index: 900;
-            color: rgba(11,11,11,0.2);
-            pointer-events: none;
-            transition: all 0.9s var(--ease-out-expo);
-        }
-        .opening.morphed .morph-line:nth-child(1) {
-            top: calc(var(--header-h) + 2rem);
-            left: var(--spacing);
-            transform: translate(0, 0) scale(0.35);
-            transform-origin: top left;
-        }
-        .opening.morphed .morph-line:nth-child(2) {
-            top: calc(var(--header-h) + 2rem);
-            right: var(--spacing);
-            transform: translate(0, 0) scale(0.35);
-            transform-origin: top right;
-            text-align: right;
-        }
-        .opening.morphed .morph-line:nth-child(3) {
-            bottom: 4rem;
-            left: var(--spacing);
-            transform: translate(0, 0) scale(0.35);
-            transform-origin: bottom left;
-        }
-        .opening.morphed .morph-line:nth-child(4) {
-            bottom: 4rem;
-            right: var(--spacing);
-            transform: translate(0, 0) scale(0.35);
-            transform-origin: bottom right;
-            text-align: right;
-        }
-        .opening.morphed .morph-line em {
-            font-style: normal;
-        }
-
-        /* ── SERVICES (BREAKING GRID) ── */
-        .services-section {
-            padding: var(--spacing);
-            padding-top: 0;
-            padding-bottom: calc(var(--spacing) * 2.5);
-            position: relative;
-            z-index: 2;
-            background: var(--bg);
-            min-height: 100vh;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            height: var(--nav-height);
             display: flex;
             align-items: center;
-        }
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 4vw, 4rem);
+            transition: background var(--transition-smooth), box-shadow var(--transition-smooth);
             background: transparent;
         }
-        .service-tile {
-            position: relative;
-            background: transparent;
-            border: 1px solid rgba(11,11,11,0.08);
-            padding: clamp(1.5rem, 3vw, 2.5rem);
-            cursor: pointer;
-            transition: all 0.35s var(--ease-in-out);
+        .nav.scrolled {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 var(--border-subtle);
+            border-bottom: 1px solid var(--border-medium);
+        }
+        .nav-inner {
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            min-height: 220px;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        .nav-logo {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 0.04em;
+            color: var(--text-primary);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color var(--transition-fast);
+            position: relative;
+            z-index: 1002;
+        }
+        .nav-logo:hover {
+            color: var(--accent);
+        }
+        .nav-logo .accent-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-left: 2px;
+            vertical-align: middle;
+            position: relative;
+            top: -2px;
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%,
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 6px var(--accent-glow);
+            }
+            50% {
+                opacity: 0.4;
+                box-shadow: 0 0 12px var(--accent-glow-strong);
+            }
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            transition: color var(--transition-fast);
+            position: relative;
+            padding: 0.3rem 0;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width var(--transition-smooth);
+        }
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--bg-deep);
+            background: var(--accent);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all var(--transition-smooth);
+            position: relative;
             overflow: hidden;
             z-index: 1;
+            white-space: nowrap;
         }
-        .service-tile:hover {
-            border-color: var(--line-strong);
-            z-index: 5;
-            transform: scale(1.03);
-            box-shadow: 0 25px 45px -15px rgba(0,0,0,0.1);
-            background: #ffffff;
-        }
-        .service-tile .tile-label {
-            font-size: 0.7rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--text-sub);
-            margin-bottom: 0.5rem;
-            transition: opacity 0.3s;
-        }
-        .service-tile .tile-title {
-            font-size: clamp(1.4rem, 2.2vw, 2rem);
-            font-weight: 450;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-            transition: transform 0.4s var(--ease-out-expo);
-            transform-origin: left bottom;
-        }
-        .service-tile .tile-desc {
+        .nav-cta::before {
+            content: '';
             position: absolute;
-            bottom: 1.5rem;
-            left: 1.5rem;
-            right: 1.5rem;
-            font-size: 0.8rem;
-            line-height: 1.5;
-            color: var(--text-sub);
+            inset: 0;
+            background: var(--accent-bright);
+            z-index: -1;
             opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.35s, transform 0.45s var(--ease-out-expo);
-            pointer-events: none;
-            max-width: 90%;
+            transition: opacity var(--transition-smooth);
         }
-        .service-tile:hover .tile-desc {
+        .nav-cta:hover::before {
             opacity: 1;
-            transform: translateY(0);
         }
-        .service-tile:hover .tile-title {
-            transform: translateY(-12px);
+        .nav-cta:hover {
+            box-shadow: 0 0 30px var(--accent-glow);
+            transform: translateY(-1px);
         }
-        .service-tile:hover .tile-label {
-            opacity: 0.5;
+        .nav-cta:active {
+            transform: scale(0.97);
         }
 
-        /* ── IDENTITY (CINEMATIC REVEAL) ── */
-        .identity-section {
-            background: var(--bg-dark);
-            color: var(--text-light);
-            padding: var(--spacing);
-            padding-top: calc(var(--spacing) * 3);
-            padding-bottom: calc(var(--spacing) * 3);
-            position: relative;
-            z-index: 2;
+        /* Hamburger menu for mobile */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1002;
+            background: none;
+            border: none;
+            padding: 8px;
         }
-        .identity-inner {
-            max-width: 1300px;
-            margin: 0 auto;
+        .nav-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all var(--transition-smooth);
+            transform-origin: center;
         }
-        .identity-block {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            margin-bottom: clamp(3rem, 7vw, 5rem);
+        .nav-hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .nav-hamburger.active span:nth-child(2) {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+            transform: scaleX(0);
         }
-        .identity-block.revealed {
+        .nav-hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile menu overlay */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 5, 0.97);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition-smooth);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .mobile-menu.active {
             opacity: 1;
-            transform: translateY(0);
+            pointer-events: all;
         }
-        .identity-block:last-child {
-            margin-bottom: 0;
-        }
-        .id-number {
-            font-size: clamp(4rem, 9vw, 8rem);
-            font-weight: 300;
-            letter-spacing: -0.04em;
-            line-height: 0.8;
-            margin-right: clamp(2rem, 5vw, 4rem);
-            color: rgba(244, 241, 236, 0.18);
-            flex: 0 0 auto;
-            min-width: 2em;
-            transition: color 0.3s;
-        }
-        .id-content {
-            flex: 1 1 300px;
-            border-left: 1px solid rgba(244, 241, 236, 0.2);
-            padding-left: clamp(1.5rem, 3vw, 2.5rem);
-        }
-        .id-label {
-            font-size: 0.7rem;
-            letter-spacing: 0.3em;
+        .mobile-menu a {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
+            transition: color var(--transition-fast);
+        }
+        .mobile-menu a:hover {
+            color: var(--accent);
+        }
+
+        /* ============ MAIN CONTENT WRAPPER ============ */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============ SECTION BASE STYLES ============ */
+        .section {
+            padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 4vw, 4rem);
+            max-width: var(--max-width);
+            margin: 0 auto;
+            position: relative;
+        }
+        .section-label {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
             margin-bottom: 1rem;
-            color: rgba(244, 241, 236, 0.5);
             display: block;
         }
-        .id-text {
-            font-size: clamp(1rem, 1.4vw, 1.2rem);
-            font-weight: 350;
-            line-height: 1.7;
-            color: var(--text-light);
-            opacity: 0.85;
+        .section-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+        }
+        .section-subtitle {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
         }
 
-        /* ── CTA ── */
-        .cta-section {
+        /* ============ SCROLL REVEAL BASE ============ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity var(--transition-reveal), transform var(--transition-reveal);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Staggered children */
+        .reveal-stagger>* {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .reveal-stagger.is-visible>*:nth-child(1) {
+            transition-delay: 0s;
+        }
+        .reveal-stagger.is-visible>*:nth-child(2) {
+            transition-delay: 0.08s;
+        }
+        .reveal-stagger.is-visible>*:nth-child(3) {
+            transition-delay: 0.16s;
+        }
+        .reveal-stagger.is-visible>*:nth-child(4) {
+            transition-delay: 0.24s;
+        }
+        .reveal-stagger.is-visible>*:nth-child(5) {
+            transition-delay: 0.32s;
+        }
+        .reveal-stagger.is-visible>*:nth-child(6) {
+            transition-delay: 0.4s;
+        }
+        .reveal-stagger.is-visible>*:nth-child(7) {
+            transition-delay: 0.48s;
+        }
+        .reveal-stagger.is-visible>*:nth-child(8) {
+            transition-delay: 0.56s;
+        }
+        .reveal-stagger.is-visible>*:nth-child(9) {
+            transition-delay: 0.64s;
+        }
+        .reveal-stagger.is-visible>* {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============ HERO SECTION ============ */
+        /* Bold, architectural hero with parallax geometric accent */
+        .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: var(--spacing);
-            background: var(--bg);
+            padding: calc(var(--nav-height) + 2rem) clamp(1.5rem, 4vw, 4rem) 4rem;
+            max-width: var(--max-width);
+            margin: 0 auto;
             position: relative;
-            z-index: 10;
+            overflow: visible;
         }
-        .cta-core {
-            text-align: center;
-            max-width: 680px;
-            width: 100%;
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
         }
-        .cta-headline {
-            font-size: clamp(2.8rem, 8vw, 6rem);
-            font-weight: 270;
-            letter-spacing: -0.03em;
-            line-height: 1.05;
-            margin-bottom: 2.2rem;
-            color: var(--text);
-        }
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7em;
-            font-size: clamp(0.9rem, 1.3vw, 1.1rem);
-            font-weight: 550;
-            letter-spacing: 0.2em;
+        .hero-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            text-decoration: none;
-            color: var(--text-light);
-            background: var(--bg-dark);
-            padding: 1.2em 3.2em;
-            transition: background 0.35s, transform 0.3s, box-shadow 0.35s;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-            position: relative;
-            animation: subtlePulse 2.4s infinite ease-in-out;
-        }
-        @keyframes subtlePulse {
-            0% { box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
-            50% { box-shadow: 0 8px 28px rgba(0,0,0,0.14); }
-            100% { box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
-        }
-        .cta-button:hover {
-            background: #1f1f1f;
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.18);
-            animation: none;
-        }
-        .cta-arrow {
-            font-size: 1.2em;
-            transition: transform 0.3s;
-            display: inline-block;
-        }
-        .cta-button:hover .cta-arrow {
-            transform: translateX(8px);
-        }
-        .cta-note {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
             display: block;
-            margin-top: 2rem;
-            font-size: 0.68rem;
-            letter-spacing: 0.24em;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s ease-out 0.2s forwards;
+        }
+        .hero-title {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: clamp(3rem, 8vw, 7rem);
+            letter-spacing: -0.02em;
+            line-height: 0.95;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s ease-out 0.4s forwards;
+        }
+        .hero-title .accent-line {
+            display: inline-block;
+            position: relative;
+        }
+        .hero-title .accent-line::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            opacity: 0.6;
+        }
+        .hero-description {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            color: var(--text-secondary);
+            max-width: 560px;
+            line-height: 1.5;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s ease-out 0.6s forwards;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s ease-out 0.8s forwards;
+        }
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Hero background geometric accent */
+        .hero-geometry {
+            position: absolute;
+            top: 50%;
+            right: -5%;
+            transform: translateY(-50%);
+            width: clamp(300px, 45vw, 700px);
+            height: clamp(300px, 45vw, 700px);
+            border-radius: 50%;
+            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+            animation: geometryFloat 8s ease-in-out infinite;
+        }
+        .hero-geometry::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            border: 1px solid var(--border-medium);
+            border-radius: 50%;
+            animation: geometryPulse 4s ease-in-out infinite;
+        }
+        @keyframes geometryFloat {
+            0%,
+            100% {
+                transform: translateY(-50%) scale(1);
+            }
+            33% {
+                transform: translateY(-48%) scale(1.04);
+            }
+            66% {
+                transform: translateY(-52%) scale(0.96);
+            }
+        }
+        @keyframes geometryPulse {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.06);
+            }
+        }
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeSlideUp 0.8s ease-out 1.2s forwards;
+            z-index: 2;
+        }
+        .scroll-indicator span {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: var(--text-sub);
-            opacity: 0.65;
+            color: var(--text-muted);
+        }
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollLinePulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollLinePulse {
+            0%,
+            100% {
+                opacity: 0.4;
+                height: 40px;
+            }
+            50% {
+                opacity: 1;
+                height: 55px;
+            }
         }
 
-        /* Responsive */
-        @media (max-width: 1000px) {
+        /* ============ BUTTONS ============ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.9rem 2rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            white-space: nowrap;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-deep);
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-bright);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+        }
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 40px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        .btn-primary:active {
+            transform: scale(0.96);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-medium);
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        .btn-outline:active {
+            transform: scale(0.96);
+        }
+        /* Arrow icon in buttons */
+        .btn-arrow {
+            display: inline-block;
+            transition: transform var(--transition-fast);
+        }
+        .btn:hover .btn-arrow {
+            transform: translate(3px, -3px);
+        }
+
+        /* ============ PHILOSOPHY / MANIFESTO SECTION ============ */
+        /* Minimal, bold statement section */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(2rem, 6vw, 5rem);
+            align-items: start;
+        }
+        .philosophy-quote {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            color: var(--text-primary);
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--accent);
+        }
+        .philosophy-text {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .philosophy-text strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        /* Divider line */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border-medium);
+            position: relative;
+            margin: 0;
+        }
+        .divider::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        /* ============ SERVICES GRID ============ */
+        /* 8 services in a responsive grid, Cap360 featured separately */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .service-card {
+            background: var(--bg-card);
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: all var(--transition-smooth);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+        }
+        .service-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        .service-card>* {
+            position: relative;
+            z-index: 1;
+        }
+        .service-card-number {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            opacity: 0.7;
+        }
+        .service-card-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+        .service-card-desc {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .service-card-icon {
+            font-size: 1.5rem;
+            opacity: 0.5;
+            transition: opacity var(--transition-fast);
+        }
+        .service-card:hover .service-card-icon {
+            opacity: 1;
+        }
+
+        /* ============ CAP360 FEATURE SECTION ============ */
+        /* Standout full-bleed-style feature card */
+        .cap360-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-xl);
+            padding: clamp(2rem, 5vw, 4rem);
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+        }
+        .cap360-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+            pointer-events: none;
+            transition: all var(--transition-smooth);
+        }
+        .cap360-card:hover::before {
+            top: -40%;
+            right: -20%;
+        }
+        .cap360-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+        }
+        .cap360-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .cap360-title {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .cap360-desc {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 550px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+
+        /* ============ STATS / CREDIBILITY ROW ============ */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .stat-item {
+            background: var(--bg-card);
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            text-align: center;
+            transition: background var(--transition-smooth);
+        }
+        .stat-item:hover {
+            background: var(--bg-card-hover);
+        }
+        .stat-number {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--accent);
+            letter-spacing: -0.02em;
+            display: block;
+        }
+        .stat-label {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        /* ============ CTA SECTION (EMAIL CONVERSION FOCUS) ============ */
+        /* The most visually dominant CTA - magnetic button, glow effects, urgency */
+        .cta-section {
+            text-align: center;
+            position: relative;
+            padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 4vw, 4rem);
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            animation: geometryFloat 8s ease-in-out infinite;
+        }
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .cta-badge {
+            display: inline-block;
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--border-hover);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            animation: badgeShimmer 3s ease-in-out infinite;
+        }
+        @keyframes badgeShimmer {
+            0%,
+            100% {
+                border-color: var(--border-hover);
+                box-shadow: 0 0 10px var(--accent-glow);
+            }
+            50% {
+                border-color: var(--accent);
+                box-shadow: 0 0 25px var(--accent-glow-strong);
+            }
+        }
+        .cta-title {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .cta-subtitle {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        /* Magnetic button container */
+        .magnetic-wrap {
+            display: inline-block;
+            position: relative;
+        }
+        .btn-magnetic {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 1.2rem 3rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-decoration: none;
+            background: var(--accent);
+            color: var(--bg-deep);
+            border: none;
+            transition: all 0.15s ease-out;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 50px var(--accent-glow);
+        }
+        .btn-magnetic::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: calc(var(--radius-sm) + 2px);
+            background: var(--accent);
+            z-index: -2;
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+            filter: blur(15px);
+        }
+        .btn-magnetic:hover::before {
+            opacity: 0.6;
+        }
+        .btn-magnetic:hover {
+            box-shadow: 0 0 70px var(--accent-glow-strong);
+        }
+        .btn-magnetic:active {
+            transform: scale(0.95);
+        }
+        .cta-email-display {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            letter-spacing: 0.03em;
+            opacity: 0.8;
+            transition: opacity var(--transition-fast);
+            word-break: break-all;
+        }
+        .cta-email-display:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+        .cta-scarcity {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            letter-spacing: 0.05em;
+            font-style: italic;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            border-top: 1px solid var(--border-medium);
+            padding: 3rem clamp(1.5rem, 4vw, 4rem);
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-brand {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.06em;
+            color: var(--text-primary);
+            text-transform: uppercase;
+        }
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color var(--transition-fast);
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* ============ RESPONSIVE BREAKPOINTS ============ */
+        @media (max-width: 1024px) {
             .services-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .opening.morphed .morph-line {
-                position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                right: auto !important;
-                bottom: auto !important;
-                transform: none !important;
-                color: var(--text) !important;
-                opacity: 0.2 !important;
-                font-size: clamp(2rem, 6vw, 4rem) !important;
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .opening.morphed {
-                display: none; /* hide fixed corners on tablet, simplify */
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .hero-geometry {
+                right: -20%;
+                opacity: 0.3;
             }
         }
-        @media (max-width: 700px) {
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .nav-hamburger {
+                display: flex;
+            }
+            .nav .nav-cta {
+                display: none;
+            }
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero {
+                min-height: 90vh;
+            }
+            .hero-title {
+                font-size: clamp(2.2rem, 7vw, 3.5rem);
+            }
+            .hero-geometry {
+                right: -35%;
+                opacity: 0.2;
+                width: 350px;
+                height: 350px;
+            }
+            .cap360-card::before {
+                width: 300px;
+                height: 300px;
+                top: -20%;
+                right: -40%;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .cta-section::before {
+                width: 300px;
+                height: 300px;
+            }
+            .btn-magnetic {
+                padding: 1rem 2rem;
+                font-size: 0.95rem;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-links {
+                justify-content: center;
+            }
+        }
+        @media (max-width: 480px) {
             .services-grid {
                 grid-template-columns: 1fr;
-                gap: 1px;
             }
-            .service-tile {
-                min-height: 150px;
+            .stats-row {
+                grid-template-columns: 1fr;
             }
-            .identity-block {
-                flex-direction: column;
-                align-items: flex-start;
+            .hero-title {
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
             }
-            .id-number {
-                margin-right: 0;
-                margin-bottom: 1rem;
-                font-size: 3rem;
+            .hero-geometry {
+                display: none;
             }
-            .id-content {
-                border-left: none;
-                padding-left: 0;
-                border-top: 1px solid rgba(255,255,255,0.15);
-                padding-top: 1.2rem;
+            .cap360-card {
+                padding: 1.5rem;
             }
-            .opening.morphed .morph-line {
-                font-size: 1.6rem !important;
-                opacity: 0.35 !important;
+            .btn-magnetic {
+                width: 100%;
+                justify-content: center;
+            }
+            .section {
+                padding: 3rem 1rem;
+            }
+            .cta-section {
+                padding: 3rem 1rem;
+            }
+        }
+
+        /* ============ REDUCED MOTION ============ */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            .reveal,
+            .reveal-stagger>* {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .hero-geometry {
+                animation: none;
+            }
+            .hero-eyebrow,
+            .hero-title,
+            .hero-description,
+            .hero-actions,
+            .scroll-indicator {
+                animation: none;
+                opacity: 1;
+            }
+            .btn-magnetic {
+                transition: none;
             }
         }
     </style>
 </head>
 <body>
-    <header class="site-header" id="siteHeader">
-        <span class="brand">CAP STUDIO</span>
-    </header>
 
-    <div class="scroll-stage">
-        <!-- OPENING (MORPH) -->
-        <section class="opening" id="openingSection">
-            <div class="opening-canvas">
-                <span class="morph-line">Find your world.</span>
-                <span class="morph-line">Speak to your world.</span>
-                <span class="morph-line">Make products to <em>fill</em> that world.</span>
-                <span class="morph-line">Allow people to buy into the world you've built.</span>
-            </div>
-        </section>
+    <!-- ============ GRAIN TEXTURE OVERLAY ============ -->
+    <!-- Fixed overlay adding subtle film-grain texture for premium feel -->
+    <div class="grain-overlay" aria-hidden="true"></div>
 
-        <!-- SERVICES -->
-        <section class="services-section" id="servicesSection">
-            <div class="services-grid">
-                <div class="service-tile">
-                    <span class="tile-label">01</span>
-                    <span class="tile-title">Atelier</span>
-                    <p class="tile-desc">Bespoke creative workshop combining traditional craftsmanship with cutting-edge innovation.</p>
-                </div>
-                <div class="service-tile">
-                    <span class="tile-label">02</span>
-                    <span class="tile-title">Brand Maturation</span>
-                    <p class="tile-desc">Strategic evolution of brand identity and positioning to achieve market dominance.</p>
-                </div>
-                <div class="service-tile">
-                    <span class="tile-label">03</span>
-                    <span class="tile-title">Development</span>
-                    <p class="tile-desc">Full-spectrum product and concept development from ideation to market launch.</p>
-                </div>
-                <div class="service-tile">
-                    <span class="tile-label">04</span>
-                    <span class="tile-title">Streamlined Production</span>
-                    <p class="tile-desc">Optimized production workflows that maximize efficiency and creative output.</p>
-                </div>
-                <div class="service-tile">
-                    <span class="tile-label">05</span>
-                    <span class="tile-title">Management</span>
-                    <p class="tile-desc">Comprehensive project and talent management ensuring seamless execution.</p>
-                </div>
-                <div class="service-tile">
-                    <span class="tile-label">06</span>
-                    <span class="tile-title">Advanced Strategy</span>
-                    <p class="tile-desc">Data-driven strategic planning with predictive market intelligence.</p>
-                </div>
-                <div class="service-tile">
-                    <span class="tile-label">07</span>
-                    <span class="tile-title">Collection Designs & Build</span>
-                    <p class="tile-desc">End-to-end collection creation from conceptual design to final production.</p>
-                </div>
-                <div class="service-tile">
-                    <span class="tile-label">08</span>
-                    <span class="tile-title">Sales & Marketing Agenda</span>
-                    <p class="tile-desc">Integrated sales and marketing roadmaps designed for maximum market penetration.</p>
-                </div>
-                <div class="service-tile">
-                    <span class="tile-label">09</span>
-                    <span class="tile-title">Bridge360</span>
-                    <p class="tile-desc">Holistic 360-degree brand connectivity across all touchpoints and channels.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- IDENTITY -->
-        <section class="identity-section" id="identitySection">
-            <div class="identity-inner">
-                <div class="identity-block reveal">
-                    <div class="id-number">01</div>
-                    <div class="id-content">
-                        <span class="id-label">Foundation</span>
-                        <p class="id-text">CAP Studio is a multidisciplinary international agency headquartered in Miami, developing and implementing cross-cultural strategies with partners worldwide.</p>
-                    </div>
-                </div>
-                <div class="identity-block reveal">
-                    <div class="id-number">02</div>
-                    <div class="id-content">
-                        <span class="id-label">Method</span>
-                        <p class="id-text">Operating as a 360° creative intelligence hub, we employ a free-form methodology that delivers dedicated, tailor-made support, strategic direction, and comprehensive assistance.</p>
-                    </div>
-                </div>
-                <div class="identity-block reveal">
-                    <div class="id-number">03</div>
-                    <div class="id-content">
-                        <span class="id-label">Network</span>
-                        <p class="id-text">Our global network forms the foundation for deep counter-culture understanding, providing clients with an influential platform for personal brand architecture, aesthetic evolution, and the elevation of visionary projects.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA -->
-        <section class="cta-section" id="ctaSection">
-            <div class="cta-core">
-                <h2 class="cta-headline">Ready to disappear<br>from the noise?</h2>
-                <a href="mailto:studio@capstudio.com" class="cta-button" id="ctaButton">
-                    INQUIRE
-                    <span class="cta-arrow">→</span>
-                </a>
-                <span class="cta-note">Serious inquiries only. Confidentiality guaranteed.</span>
-            </div>
-        </section>
+    <!-- ============ MOBILE MENU OVERLAY ============ -->
+    <!-- Fullscreen overlay navigation for mobile devices -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <a href="#hero" data-nav-close>Home</a>
+        <a href="#philosophy" data-nav-close>About</a>
+        <a href="#services" data-nav-close>Services</a>
+        <a href="#cap360" data-nav-close>Cap360</a>
+        <a href="#contact" data-nav-close>Contact</a>
     </div>
 
-    <script>
-        (function() {
-            // DOM elements
-            const header = document.getElementById('siteHeader');
-            const openingSection = document.getElementById('openingSection');
-            const morphLines = document.querySelectorAll('.morph-line');
-            const revealBlocks = document.querySelectorAll('.reveal');
-            const ctaButton = document.getElementById('ctaButton');
+    <!-- ============ FIXED NAVIGATION ============ -->
+    <!-- Transparent at top, gains backdrop-blur on scroll -->
+    <nav class="nav" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo" aria-label="CAP Studio Home">
+                CAP Studio<span class="accent-dot" aria-hidden="true"></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#philosophy">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#cap360">Cap360</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="nav-cta">Inquire</a>
+            <!-- Hamburger button for mobile -->
+            <button class="nav-hamburger" id="hamburgerBtn" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
-            // ── HEADER SCROLL ──
-            let headerTicking = false;
-            const updateHeader = () => {
-                const y = window.scrollY;
-                if (y > 30) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-                headerTicking = false;
-            };
-            window.addEventListener('scroll', () => {
-                if (!headerTicking) {
-                    requestAnimationFrame(updateHeader);
-                    headerTicking = true;
-                }
-            }, { passive: true });
-            updateHeader();
+    <!-- ============ MAIN CONTENT ============ -->
+    <main>
 
-            // ── OPENING MORPH ON SCROLL ──
-            const handleMorph = () => {
-                const scrollY = window.scrollY;
-                const viewH = window.innerHeight;
-                const triggerPoint = viewH * 0.5; // when half of opening is scrolled past
-                if (scrollY > triggerPoint && window.innerWidth > 1000) {
-                    openingSection.classList.add('morphed');
-                } else {
-                    openingSection.classList.remove('morphed');
-                }
-            };
-            window.addEventListener('scroll', handleMorph, { passive: true });
-            window.addEventListener('resize', handleMorph);
-            handleMorph();
+        <!-- ============ HERO SECTION ============ -->
+        <!-- Bold statement hero with parallax geometric glow and animated entrance -->
+        <section class="hero" id="hero" aria-labelledby="heroTitle">
+            <!-- Large ambient geometric glow behind hero text -->
+            <div class="hero-geometry" aria-hidden="true" id="heroGeometry"></div>
+            <div class="hero-content">
+                <span class="hero-eyebrow">360° Creative Intelligence Hub — Miami</span>
+                <h1 class="hero-title" id="heroTitle">
+                    Find your <span class="accent-line">world.</span><br>Build it. Own it.
+                </h1>
+                <p class="hero-description">
+                    Speak to your world. Make products to fill that world. Virtually communicate to that world. Allow people to buy into the world you’ve built.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">
+                        Start a Conversation <span class="btn-arrow">↗</span>
+                    </a>
+                    <a href="#services" class="btn btn-outline">Explore Capabilities</a>
+                </div>
+            </div>
+            <!-- Scroll-down indicator -->
+            <div class="scroll-indicator" aria-hidden="true">
+                <span>Scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
 
-            // ── IDENTITY REVEAL ON SCROLL ──
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('revealed');
-                        revealObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
-            revealBlocks.forEach(block => revealObserver.observe(block));
+        <!-- ============ PHILOSOPHY / MANIFESTO SECTION ============ -->
+        <!-- Dual-column: bold quote + explanatory text establishing authority -->
+        <section class="section" id="philosophy" aria-labelledby="philosophyTitle">
+            <span class="section-label reveal">About Us</span>
+            <div class="philosophy-grid reveal">
+                <blockquote class="philosophy-quote">
+                    CAP Studio is a multidisciplinary international agency headquartered in Miami, developing and implementing cross-cultural strategies with partners worldwide.
+                </blockquote>
+                <div class="philosophy-text">
+                    <p>
+                        
+                        
+                        Operating as a 360° creative intelligence hub, we employ a <strong>free-form methodology</strong> 
+                        that delivers dedicated, tailor-made support, strategic direction, and comprehensive assistance.
+                    </p>
+                    <p style="margin-top:1rem;">
+                        Our global network forms the foundation for deep <strong>counter-culture understanding</strong>,
+                        providing clients with an influential platform for personal brand architecture,
+                        aesthetic evolution, and the elevation of visionary projects.
+                    </p>
+                    <p style="margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
+                        Established in 2012. Operating worldwide.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-            // ── CTA CLICK ──
-            if (ctaButton) {
-                ctaButton.addEventListener('click', (e) => {
-                    // mailto proceeds normally
-                });
+        <!-- Divider with accent -->
+        <div class="divider" style="max-width:var(--max-width);margin:0 auto;width:calc(100% - clamp(3rem, 8vw, 8rem));" aria-hidden="true"></div>
+
+        <!-- ============ SERVICES GRID SECTION ============ -->
+        <!-- 8 core services in an interactive 4-column grid with hover microinteractions -->
+        <section class="section" id="services" aria-labelledby="servicesTitle">
+            <span class="section-label reveal">Capabilities</span>
+            <h2 class="section-title reveal" id="servicesTitle">Precision-crafted services for those who demand more.</h2>
+            <p class="section-subtitle reveal" style="margin-bottom:2.5rem;">
+                From conceptual design to market dominance — every service is a bespoke solution engineered for impact.
+            </p>
+            <div class="services-grid reveal-stagger">
+                <!-- Service 1: Atelier -->
+                <article class="service-card">
+                    <span class="service-card-number">01</span>
+                    <span class="service-card-icon" aria-hidden="true">◆</span>
+                    <h3 class="service-card-title">Atelier</h3>
+                    <p class="service-card-desc">Bespoke creative workshop combining traditional craftsmanship with cutting-edge innovation.</p>
+                </article>
+                <!-- Service 2: Brand Maturation -->
+                <article class="service-card">
+                    <span class="service-card-number">02</span>
+                    <span class="service-card-icon" aria-hidden="true">◇</span>
+                    <h3 class="service-card-title">Brand Maturation</h3>
+                    <p class="service-card-desc">Strategic evolution of brand identity and positioning to achieve market dominance.</p>
+                </article>
+                <!-- Service 3: Development -->
+                <article class="service-card">
+                    <span class="service-card-number">03</span>
+                    <span class="service-card-icon" aria-hidden="true">○</span>
+                    <h3 class="service-card-title">Development</h3>
+                    <p class="service-card-desc">Full-spectrum product and concept development from ideation to market launch.</p>
+                </article>
+                <!-- Service 4: Streamlined Production -->
+                <article class="service-card">
+                    <span class="service-card-number">04</span>
+                    <span class="service-card-icon" aria-hidden="true">△</span>
+                    <h3 class="service-card-title">Streamlined Production</h3>
+                    <p class="service-card-desc">Optimized production workflows that maximize efficiency and creative output.</p>
+                </article>
+                <!-- Service 5: Management -->
+                <article class="service-card">
+                    <span class="service-card-number">05</span>
+                    <span class="service-card-icon" aria-hidden="true">▽</span>
+                    <h3 class="service-card-title">Management</h3>
+                    <p class="service-card-desc">Comprehensive project and talent management ensuring seamless execution.</p>
+                </article>
+                <!-- Service 6: Advanced Strategy -->
+                <article class="service-card">
+                    <span class="service-card-number">06</span>
+                    <span class="service-card-icon" aria-hidden="true">□</span>
+                    <h3 class="service-card-title">Advanced Strategy</h3>
+                    <p class="service-card-desc">Data-driven strategic planning with predictive market intelligence.</p>
+                </article>
+                <!-- Service 7: Collection Designs & Build -->
+                <article class="service-card">
+                    <span class="service-card-number">07</span>
+                    <span class="service-card-icon" aria-hidden="true">⬡</span>
+                    <h3 class="service-card-title">Collection Designs & Build</h3>
+                    <p class="service-card-desc">End-to-end collection creation from conceptual design to final production.</p>
+                </article>
+                <!-- Service 8: Sales & Marketing Agenda -->
+                <article class="service-card">
+                    <span class="service-card-number">08</span>
+                    <span class="service-card-icon" aria-hidden="true">◎</span>
+                    <h3 class="service-card-title">Sales & Marketing Agenda</h3>
+                    <p class="service-card-desc">Integrated sales and marketing roadmaps designed for maximum market penetration.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ============ CAP360 FEATURE SECTION ============ -->
+        <!-- Standout highlight card for the flagship Cap360 offering -->
+        <section class="section" id="cap360" aria-labelledby="cap360Title">
+            <div class="cap360-card reveal">
+                <span class="cap360-label">Limited Availability — Selective Partnerships</span>
+                <h2 class="cap360-title" id="cap360Title">Cap360</h2>
+                <p class="cap360-desc">
+                    Holistic 360-degree brand connectivity across all touchpoints and channels.
+                    We unify your visual identity, messaging, digital presence, and physical experiences
+                    into one seamless, powerful ecosystem that commands attention and builds loyalty.
+                </p>
+                <a href="#contact" class="btn btn-primary" style="margin-top:2rem;position:relative;z-index:1;">
+                    Explore Cap360 <span class="btn-arrow">↗</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ============ STATS / CREDIBILITY SECTION ============ -->
+        <!-- Numbers row building trust and authority through social proof -->
+        <section class="section" aria-labelledby="statsTitle" style="padding-top:0;">
+            <span class="section-label reveal" style="text-align:center;display:block;">By the Numbers</span>
+            <h2 class="section-title reveal" id="statsTitle" style="text-align:center;">Trusted by industry leaders worldwide.</h2>
+            <div class="stats-row reveal-stagger" style="margin-top:2rem;">
+                <div class="stat-item">
+                    <span class="stat-number">150+</span>
+                    <span class="stat-label">Projects Delivered</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">12</span>
+                    <span class="stat-label">Countries Reached</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Client Retention</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">360°</span>
+                    <span class="stat-label">Full-Spectrum Coverage</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ EMAIL CTA SECTION ============ -->
+        <!-- The primary conversion zone — magnetic email button, scarcity cues, glow effects -->
+        <section class="cta-section" id="contact" aria-labelledby="ctaTitle">
+            <div class="cta-inner">
+                <span class="cta-badge reveal">Limited Availability — Selective Partnerships</span>
+                <h2 class="cta-title reveal" id="ctaTitle">Ready to build your world?</h2>
+                <p class="cta-subtitle reveal">
+                    We take on a limited number of projects each quarter to ensure
+                    unparalleled quality and dedication. Reach out directly to start the conversation.
+                </p>
+                <!-- Magnetic CTA button — the core conversion element -->
+                <div class="magnetic-wrap reveal" id="magneticWrap">
+                    <a href="mailto:hello@capstudio.com?subject=Inquiry%20%E2%80%94%20New%20Project%20Discussion"
+                    class="btn-magnetic" id="magneticBtn"
+                    aria-label="Email CAP Studio to start a project discussion">
+                    Inquire <span class="btn-arrow">→</span>
+                </a>
+            </div>
+            <!-- Direct email display -->
+            <p class="cta-email-display reveal">
+                <a href="mailto:hello@capstudio.com" style="color:inherit;text-decoration:none;">hello@capstudio.com</a>
+            </p>
+            <p class="cta-scarcity reveal">
+                * Serious inquiries only. Confidentiality guaranteed.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" role="contentinfo">
+    <span class="footer-brand">CAP Studio</span>
+    <span class="footer-copy">&copy; <span id="currentYear">2024</span> CAP Studio. All rights reserved.</span>
+    <ul class="footer-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="mailto:hello@capstudio.com">Email Us</a></li>
+    </ul>
+</footer>
+
+<!-- ============ SCRIPTS (Vanilla JS, no dependencies) ============ -->
+<script>
+    (function() {
+        // ============ DOM ELEMENT REFERENCES ============
+        const navbar = document.getElementById('navbar');
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const heroGeometry = document.getElementById('heroGeometry');
+        const magneticWrap = document.getElementById('magneticWrap');
+        const magneticBtn = document.getElementById('magneticBtn');
+        const currentYearSpan = document.getElementById('currentYear');
+        const allRevealElements = document.querySelectorAll('.reveal, .reveal-stagger');
+        const mobileMenuLinks = document.querySelectorAll('[data-nav-close]');
+
+        // ============ SET CURRENT YEAR ============
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
+
+        // ============ NAVBAR SCROLL EFFECT ============
+        // Adds scrolled class for backdrop-blur and border when page is scrolled
+        function updateNavScroll() {
+            const scrollY = window.scrollY;
+            if (scrollY > 30) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
+        }
+        window.addEventListener('scroll', updateNavScroll, { passive: true });
+        // Initial check
+        updateNavScroll();
 
-            console.log('%c CAP STUDIO %c— Creative Intelligence Hub',
-                'font-weight:600; letter-spacing:0.2em; color:#0b0b0b;',
-                'color:#3e3a35;');
-        })();
-    </script>
+        // ============ MOBILE MENU TOGGLE ============
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            hamburgerBtn.classList.add('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            hamburgerBtn.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+
+        // Close mobile menu on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // ============ HERO GEOMETRY PARALLAX ============
+        // Subtle parallax movement on the geometric background glow
+        function updateHeroParallax() {
+            if (!heroGeometry || window.innerWidth < 480) return;
+            const scrollY = window.scrollY;
+            const heroSection = document.getElementById('hero');
+            if (!heroSection) return;
+            const heroRect = heroSection.getBoundingClientRect();
+            // Only apply parallax when hero is in view
+            if (heroRect.bottom > 0 && heroRect.top < window.innerHeight) {
+                const offset = scrollY * 0.03;
+                heroGeometry.style.transform = `translateY(-50%) translateX(${offset}px) scale(${1 + offset * 0.002})`;
+            }
+        }
+        window.addEventListener('scroll', updateHeroParallax, { passive: true });
+
+        // ============ MAGNETIC BUTTON EFFECT ============
+        // Button subtly follows cursor within its bounds for a satisfying microinteraction
+        if (magneticWrap && magneticBtn && window.innerWidth > 768) {
+            magneticWrap.addEventListener('mousemove', (e) => {
+                const rect = magneticWrap.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const deltaX = (e.clientX - centerX) * 0.25;
+                const deltaY = (e.clientY - centerY) * 0.25;
+                // Clamp the movement to keep it subtle
+                const clampedX = Math.max(-12, Math.min(12, deltaX));
+                const clampedY = Math.max(-8, Math.min(8, deltaY));
+                magneticBtn.style.transform = `translate(${clampedX}px, ${clampedY}px)`;
+                magneticBtn.style.transition = 'transform 0.15s ease-out';
+            });
+            magneticWrap.addEventListener('mouseleave', () => {
+                magneticBtn.style.transform = 'translate(0, 0)';
+                magneticBtn.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        }
+
+        // ============ SCROLL REVEAL (Intersection Observer) ============
+        // Reveals elements with .reveal or .reveal-stagger classes as they enter viewport
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Once revealed, stop observing to save resources
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px 0px -60px 0px', // Trigger slightly before element is fully in view
+            threshold: 0.1
+        });
+
+        allRevealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // ============ SMOOTH SCROLL FOR ANCHOR LINKS (fallback for older browsers) ============
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    const navHeight = navbar.offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window
+                        .pageYOffset - navHeight - 20;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ============ ACTIVE NAV LINK HIGHLIGHT ON SCROLL ============
+        // Highlights the current section's nav link based on scroll position
+        const navLinksAll = document.querySelectorAll('.nav-links a');
+        const sectionIds = Array.from(navLinksAll)
+            .map(link => link.getAttribute('href'))
+            .filter(href => href && href.startsWith('#'))
+            .map(href => href.substring(1));
+
+        function updateActiveNavLink() {
+            const scrollY = window.scrollY + navbar.offsetHeight + 100;
+            let activeId = null;
+            sectionIds.forEach(id => {
+                const section = document.getElementById(id);
+                if (section && section.offsetTop <= scrollY) {
+                    activeId = id;
+                }
+            });
+            navLinksAll.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' + activeId) {
+                    link.style.color = 'var(--accent)';
+                } else if (href && href.startsWith('#')) {
+                    link.style.color = '';
+                }
+            });
+        }
+        window.addEventListener('scroll', updateActiveNavLink, { passive: true });
+
+        console.log('%c CAP Studio %c 360° Creative Intelligence Hub ',
+            'background:#d4a853;color:#050505;font-weight:800;padding:6px 12px;font-size:14px;letter-spacing:0.05em;',
+            'background:#111;color:#f5f0eb;padding:6px 12px;font-size:12px;');
+        console.log('%c Interested in working together? Reach out: hello@capstudio.com',
+            'color:#b8b0a6;font-style:italic;');
+    })();
+</script>
+
 </body>
 </html>
